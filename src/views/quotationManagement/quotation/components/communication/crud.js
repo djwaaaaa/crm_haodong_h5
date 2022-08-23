@@ -3,6 +3,9 @@ export const crudOptions = (vm) => {
     pageOptions: {
       compact: false
     },
+    searchOptions:{
+      show: false
+    },
     options: {
       height: '100%'
     },

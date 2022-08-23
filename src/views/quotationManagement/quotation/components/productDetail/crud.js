@@ -6,6 +6,9 @@ export const crudOptions = (vm) => {
     pageOptions: {
       compact: false,
     },
+    searchOptions:{
+      show: false
+    },
     options: {
       // height: '100%',
       height: '300px',
@@ -31,9 +34,6 @@ export const crudOptions = (vm) => {
         title: '报价单guid',
         key: 'offer_guid',
         sortable: true,
-        search: {
-          show: true,
-        },
         form:{
           component:{
             value:vm.offerGuid,
@@ -41,6 +41,7 @@ export const crudOptions = (vm) => {
             show: false,
             on:{ //除input change事件外，更多组件事件监听
               focus(event){
+                event.props.value="666";
                 console.log(event,9999)
               } //监听表单组件的select事件
             },

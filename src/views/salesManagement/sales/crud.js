@@ -165,14 +165,37 @@ export const crudOptions = (vm) => {
       {
         title: '合同类型',
         key: 'contract_type',
-        type: 'text',
         search: { show: true },
+        type: 'select',
+        dict: {
+           data: [
+            { value: 1, label: '原始合同',},
+            { value: 2, label: '增补合同',},
+          ]
+        },
+        form: {
+          component: {
+            value: 1 // 默认值
+          }
+        },
       },
       {
         title: '合同状态',
         key: 'contract_status',
-        type: 'text',
         search: { show: true },
+        type: 'select',
+        dict: {
+           data: [
+            { value: 1, label: '生效中',},
+            { value: 2, label: '已失效',},
+            { value: 2, label: '已完成',},
+          ]
+        },
+        form: {
+          component: {
+            value: 1 // 默认值
+          }
+        },
       },
       {
         title: '项目编号',

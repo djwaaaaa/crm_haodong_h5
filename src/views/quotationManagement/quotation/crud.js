@@ -76,6 +76,17 @@ export const crudOptions = (vm) => {
         key: 'project_name',
         type: 'text',
         search: { show: true },
+        form:{
+          component:{
+            value:vm.itemName,
+            on:{ //除input change事件外，更多组件事件监听
+              focus(event){
+                vm.chooseList();
+                console.log(event,9999)
+              } //监听表单组件的select事件
+            },
+          }
+        },
       },
       {
         title: '项目创建时间',

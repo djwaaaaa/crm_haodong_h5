@@ -1,6 +1,7 @@
 <template>
   <d2-container  :class="{'page-compact':crud.pageOptions.compact}">
-    <template slot="header">报价管理</template>
+    <h2 @click="chooseList">报价管理2</h2>
+    <template slot="header" @click="chooseList">报价管理</template>
     <d2-crud-x
         ref="d2Crud"
         v-bind="_crudProps"
@@ -29,6 +30,7 @@
     <product-Detail ref="dialog" v-if="dialogShow" :offerGuid="offer_guid" :productDetail="productDetail" @closeProductDetail="closeProductDetail"></product-Detail>
     <!-- <productdetail ref="dialog" v-if="dialogShow"></productdetail> -->
     <communication ref="comm" v-if="commShow" :offerGuid="offer_guid" @closeCommunicationDialog="closeCommunicationDialog"></communication>
+    <list-Dialog ref="listDialogRef" v-if="listDialogShow" :changeItemName="changeItemName" :listDialogShow="listDialogShow"></list-Dialog>
   </d2-container>
 </template>
 
@@ -39,12 +41,14 @@ import { d2CrudPlus } from 'd2-crud-plus'
 import { request } from '@/api/service'
 import productDetail from './components/productDetail'
 import communication from './components/communication'
+import listDialog from '../../components/listDialog'
 export default {
   name: 'formSelect',
   mixins: [d2CrudPlus.crud],
   components:{
     productDetail,
     communication,
+    listDialog
     // productdetail: () => import('./components/productDetail/index.vue'),
     // communication: () => import('./components/communication/index.vue')
   },
@@ -52,8 +56,10 @@ export default {
     return {
       dialogShow:false,
       commShow:false,
+      listDialogShow:false,
       offer_guid:null,
-      productDetail:null
+      productDetail:null,
+      itemName:null,
     }
   },
   methods: {
@@ -85,7 +91,6 @@ export default {
     },
     getRecordCommunication({index, row }, done){
       console.log(index,7777,row)
-
       this.offer_guid = row.offer_guid;
       this.commShow = true;
       this.$nextTick(()=>{
@@ -105,6 +110,16 @@ export default {
     },
     closeProductDetail(){
       this.dialogShow=false;
+    },
+    chooseList(){
+      console.log(123456)
+      this.listDialogShow = true;
+      this.$nextTick(()=>{
+        this.$refs.listDialogRef.listDialog = true;
+      })
+    },
+    changeItemName(name){
+      this.itemName = name;
     }
   }
 }

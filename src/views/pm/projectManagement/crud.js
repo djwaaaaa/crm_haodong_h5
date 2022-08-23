@@ -20,7 +20,8 @@ export const crudOptions = (vm) => {
         type: 'text',
         form:{
           disabled:true
-        }
+        },
+
       },
       {
         title: '项目编号',
@@ -29,18 +30,40 @@ export const crudOptions = (vm) => {
         search: { show: true },
         type: 'text',
         width: 150,
+        form:{
+          rules:[
+            {
+              required: true,
+              message:"请输入项目编号"
+            }
+          ]
+        }
       },
       {
         title: '项目名称',
         key: 'project_name',
         type: 'text',
         search: { show: true },
+        form:{
+          rules:[
+            {
+              required: true,
+              message:"请输入项目名称"
+            }
+          ]
+        }
       },
       {
         title: '项目日期',
         key: 'project_date',
         type: 'datetime',
         form:{
+          rules:[
+            {
+              required: true,
+              message:"请输入项目日期"
+            }
+          ],
           component:{
             props:{
               valueFormat:"yyyy-MM-dd HH-mm-ss"

@@ -39,7 +39,7 @@ export function GetList (query) {
 }
 export function AddObj (obj) {
   return request({
-    url: 'project/add',
+    url: 'project.offer_product/add',
     method: 'post',
     data: obj
   })
@@ -47,14 +47,14 @@ export function AddObj (obj) {
 
 export function UpdateObj (obj) {
   return request({
-    url: 'project/edit',
+    url: 'project.offer_product/edit',
     method: 'post',
     data: obj
   })
 }
 export function DelObj (id) {
   return request({
-    url: 'project/delete',
+    url: 'project.offer_product/delete',
     method: 'post',
     data: { id }
   })
