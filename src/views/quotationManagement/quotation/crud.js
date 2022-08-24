@@ -87,7 +87,7 @@ export const crudOptions = (vm) => {
               blur(event){
                 vm.changeItemName();
                 console.log(event,9999222)
-                event.component.value=vm.itemName;
+                // event.component.value=vm.itemName;
               },
               change(event){
                 console.log(event,1234560)
