@@ -72,12 +72,12 @@ export const crudOptions = (vm) => {
       {
         title: '合同签订日期',
         key: 'sign_date',
-        type: 'datetime',
+        type: 'date',
         width: 150,
         form:{
           component:{
             props:{
-              valueFormat:"yyyy-MM-dd HH-mm-ss"
+              valueFormat:"yyyy-MM-dd"
             }
           }
         }
