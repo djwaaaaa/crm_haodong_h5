@@ -26,7 +26,7 @@ export default {
     return {
       listDialog:true,
       productDialog:true,
-      itemList:null
+      itemList:null,
     }
   },
   props: ['itemName',"listDialogShow","changeItemName"],
@@ -67,7 +67,7 @@ export default {
     width: 100%;
     height: 100%;
     background:rgba(0,0,0,0.6);
-    z-index:999;
+    z-index:99999;
   }
 .productDetail{
   width: 75%;

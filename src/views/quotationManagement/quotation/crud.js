@@ -83,9 +83,18 @@ export const crudOptions = (vm) => {
               focus(event){
                 vm.chooseList();
                 console.log(event,9999)
-              } //监听表单组件的select事件
+              }, //监听表单组件的select事件
+              blur(event){
+                vm.changeItemName();
+                console.log(event,9999222)
+                event.component.value=vm.itemName;
+              },
+              change(event){
+                console.log(event,1234560)
+                // event.component.value=vm.itemName;
+              },
             },
-          }
+          },
         },
       },
       {

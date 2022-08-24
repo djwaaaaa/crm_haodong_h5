@@ -1,6 +1,5 @@
 <template>
   <d2-container  :class="{'page-compact':crud.pageOptions.compact}">
-    <h2 @click="chooseList">报价管理2</h2>
     <template slot="header" @click="chooseList">报价管理</template>
     <d2-crud-x
         ref="d2Crud"
@@ -59,7 +58,7 @@ export default {
       listDialogShow:false,
       offer_guid:null,
       productDetail:null,
-      itemName:null,
+      itemName:"",
     }
   },
   methods: {
@@ -119,7 +118,18 @@ export default {
       })
     },
     changeItemName(name){
+      console.log(this.$refs.d2Crud,1000,crudOptions(this).columns[3].form.component.value)
+      // crudOptions(this).columns[3].form.component.value = "666777";
+      // return name;
       this.itemName = name;
+      console.log(this.itemName,777)
+      // this.pageRequest({project_name:name});
+    }
+  },
+  watch:{
+    itemName(){
+      console.log(this.itemName,999888)
+      crudOptions(this)
     }
   }
 }
