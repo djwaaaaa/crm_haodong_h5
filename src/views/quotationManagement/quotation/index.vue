@@ -5,6 +5,7 @@
         ref="d2Crud"
         v-bind="_crudProps"
         v-on="_crudListeners"
+         @form-data-change="handleFormDataChange"
         @productDetail='getProductDetail'
         @recordCommunication="getRecordCommunication"
     >
@@ -28,7 +29,7 @@
     </d2-crud-x>
     <product-Detail ref="dialog" v-if="dialogShow" :offerGuid="offer_guid" :productDetail="productDetail" @closeProductDetail="closeProductDetail"></product-Detail>
     <!-- <productdetail ref="dialog" v-if="dialogShow"></productdetail> -->
-    <communication ref="comm" v-if="commShow" :offerGuid="offer_guid" @closeCommunicationDialog="closeCommunicationDialog"></communication>
+    <communication ref="comm" v-if="commShow" :offerGuid="offer_guid" @closeCommunicationDialog="closeCommunicationDialog" :productDetail="productDetail"></communication>
     <list-Dialog ref="listDialogRef" v-if="listDialogShow" :changeItemName="changeItemName" :listDialogShow="listDialogShow"></list-Dialog>
   </d2-container>
 </template>
@@ -59,9 +60,19 @@ export default {
       offer_guid:null,
       productDetail:null,
       itemName:"",
+      // addTemplate:{
+      //   project_name: {
+      //     value: '888',
+      //   },
+      // }
     }
   },
   methods: {
+
+    handleFormDataChange ({ key, value }) {
+          console.log(key)
+          console.log(value)
+        },
     getCrudOptions () {
       return crudOptions(this)
     },
