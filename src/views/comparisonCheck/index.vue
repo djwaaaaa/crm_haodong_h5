@@ -17,9 +17,9 @@
         <!-- 销售合同 -->
         <div class="item" v-for="(contracts,index) in contractArr">
           <div class="header">
-            <div class="name" v-if="!index">销售合同基本信息</div>
+            <div class="name" v-if="contractArr.length < 2">销售合同基本信息</div>
             <div class="name" v-if="index">销售合同(增补合同)基本信息</div>
-            <div class="code">项目编号：<span>{{contracts.project_code}}</span></div>
+            <div class="code">项目编号：<span>{{project_code}}</span></div>
           </div>
           <div class="details">
             <ul>
@@ -35,7 +35,7 @@
           <div class="header">
             <div class="name" v-if="orderArr.length < 2">生产订单基本信息</div>
             <div class="name" v-if="orderArr.length >= 2">生产订单{{index+1}}基本信息</div>
-            <div class="code">项目编号：<span>{{orders.project_code}}</span></div>
+            <div class="code">项目编号：<span>{{project_code}}</span></div>
           </div>
           <div class="details">
             <ul>
@@ -47,11 +47,11 @@
           </div>
         </div>
         <!-- 采购合同 -->
-        <div class="item" v-for="(purchases,index) in purchaseArr">
+        <div class="item" v-for="(purchases,index) in purchaseArr" :key='index'>
           <div class="header">
             <div class="name" v-if="purchaseArr.length < 2">采购合同基本信息</div>
             <div class="name" v-if="purchaseArr.length >= 2">采购合同{{index+1}}基本信息</div>
-            <div class="code">项目编号：<span>{{purchases.project_code}}</span></div>
+            <div class="code">项目编号：<span>{{project_code}}</span></div>
           </div>
           <div class="details">
             <ul>
@@ -66,7 +66,7 @@
       </div>
       <div class="itemDetail" v-if="!choose">
         <!-- 销售合同 -->
-        <div class="item" v-for="(contracts,index) in contractDetailArr">
+        <div class="item" v-for="(contracts,index) in contractDetailArr" :key='index'>
           <div class="header">
             <div class="name" v-if="!index">销售合同产品信息</div>
             <div class="name" v-if="index">销售合同(增补合同)产品信息</div>
@@ -81,22 +81,50 @@
           </div>
         </div>
         <!-- 生产订单 -->
-        <div class="item" v-for="(orders,index) in orderDetailArr">
+        <div class="item" v-for="(orders,index) in orderDetailArr" :key='index'>
           <div class="header">
             <div class="name" v-if="orderDetailArr.length < 2">生产订单产品信息</div>
             <div class="name" v-if="orderDetailArr.length >= 2">生产订单{{index+1}}产品信息</div>
           </div>
           <div class="details">
-            <ul>
+            <table border="1" width="100%">
+              <tbody>
+                <tr>
+                	<th>序号</th>
+                  <th>物料编码</th>
+                  <th>产品名称</th>
+                  <th>规格</th>
+                  <th>图号</th>
+                  <th>单位</th>
+                  <th>数量</th>
+                  <th>产品说明</th>
+                  <th>客户要求</th>
+                  <th>颜色</th>
+                </tr>
+                <tr v-for="(detail,x) in orders" :key="x">
+                	<td>{{x}}</td>
+                  <td>{{detail.matter_code}}</td>
+                  <td>{{detail.product_name}}</td>
+                  <td>{{detail.specs_value}}</td>
+                  <td>{{detail.product_draw}}</td>
+                  <td>{{detail.unit}}</td>
+                  <td>{{detail.count}}</td>
+                  <td>{{detail.explain}}</td>
+                  <td>{{detail.requirement}}</td>
+                  <td>{{detail.color}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- <ul>
             	<li v-for="(detail,x) in orders" :key="x">
                 <p class="first">{{order[x]}}:</p>
                 <p>{{detail}}</p>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
         <!-- 采购合同 -->
-        <div class="item" v-for="(purchases,index) in purchaseDetailArr">
+        <div class="item" v-for="(purchases,index) in purchaseDetailArr" :key='index'>
           <div class="header">
             <div class="name" v-if="purchaseDetailArr.length < 2">采购合同产品信息</div>
             <div class="name" v-if="purchaseDetailArr.length >= 2">采购合同{{index+1}}产品信息</div>
@@ -279,8 +307,16 @@ export default {
           project_code:this.project_code,
         }
       }).then(ret => {
-        _this.contractArr = ret.data.list;
-        _this.contractDetailArr = ret.data.product_list;
+        if(!ret.data.list.length){
+          _this.contractArr = [[]];
+        }else{
+          _this.contractArr = ret.data.list;
+        }
+        if(!ret.data.product_list.length){
+          _this.contractDetailArr = [[]];
+        }else{
+         _this.contractDetailArr = ret.data.product_list;
+        }
         console.log(ret,99979)
       })
     },
@@ -293,7 +329,11 @@ export default {
           project_code:this.project_code,
         }
       }).then(ret => {
-        _this.orderArr = ret.data.list;
+        if(!ret.data.list.length){
+          _this.orderArr = [[]];
+        }else{
+          _this.orderArr = ret.data.list;
+        }
         for (let i = 0; i < _this.orderArr.length; i++) {
           console.log(_this.orderArr[i],6663)
           if(_this.orderArr[i].status == 1){
@@ -311,7 +351,11 @@ export default {
           delete _this.orderArr[i].update_time;
           delete _this.orderArr[i].delete_time;
         }
-        _this.orderDetailArr = ret.data.product_list;
+        if(!ret.data.product_list.length){
+          _this.orderDetailArr = [[]];
+        }else{
+          _this.orderDetailArr = ret.data.product_list;
+        }
         console.log(ret,8888)
       })
     },
@@ -324,8 +368,16 @@ export default {
           project_code:this.project_code,
         }
       }).then(ret => {
-        _this.purchaseArr = ret.data.list;
-        _this.purchaseDetailArr = ret.data.product_list;
+        if(!ret.data.list.length){
+          _this.purchaseArr = [[]];
+        }else{
+          _this.purchaseArr = ret.data.list;
+        }
+        if(!ret.data.product_list.length){
+          _this.purchaseDetailArr = [[]];
+        }else{
+         _this.purchaseDetailArr = ret.data.product_list;
+        }
         console.log(ret,333)
       })
     }
@@ -399,6 +451,16 @@ export default {
           font-size:20px;
           color:#333333;
           font-weight:bold;
+        }
+      }
+      .details{
+        table{
+          border-collapse: collapse;
+          margin-top: 20px;
+          td{
+            text-align: center;
+            padding: 0 10px;
+          }
         }
       }
     }
