@@ -201,15 +201,15 @@ export const crudOptions = (vm) => {
         title: '项目编号',
         key: 'project_code',
         type: 'text',
-        form:{
-          disabled:true
-        }
       },
       {
         title: '项目名称',
         key: 'project_name',
         type: 'text',
         search: { show: true },
+        form:{
+          disabled:true
+        }
       },
       {
         title: '签订日期',
