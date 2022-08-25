@@ -21,7 +21,7 @@
 
       </div>
     </d2-crud-x>
-    <product-Detail ref="dialog1" v-if="dialogShow" :offerGuid="offer_guid" @closeProductDetail="closeProductDetail"></product-Detail>
+    <!-- <product-Detail ref="dialog1" v-if="dialogShow" :offerGuid="offer_guid" @closeProductDetail="closeProductDetail"></product-Detail> -->
     <comparison-Check ref="check" v-if="checkShow" :project_code="project_code" @closeDialog="closeDialog"></comparison-Check>
   </d2-container>
 </template>
@@ -30,13 +30,12 @@
 import * as api from './api'
 import { crudOptions } from './crud'
 import { d2CrudPlus } from 'd2-crud-plus'
-import productDetail from '../productDetail'
+// import productDetail from '../productDetail'
 import comparisonCheck from '../../comparisonCheck'
 export default {
   name: 'salesManagement-sales',
   mixins: [d2CrudPlus.crud],
   components:{
-    productDetail,
     comparisonCheck
   },
   data () {
@@ -68,16 +67,16 @@ export default {
     getProductDetail({index, row }, done){
       this.offer_guid = row.contract_code;
       console.log(row,222,this.offer_guid)
-      this.dialogShow = true;
-      this.$nextTick(()=>{
-        this.$refs.dialog1.productDialog = true;
-      })
-      // this.$router.push({
-      //   path: '/salesManagement/productDetail',
-      //   query: {
-      //     offerGuid: row.contract_code
-      //   }
-      // });
+      // this.dialogShow = true;
+      // this.$nextTick(()=>{
+      //   this.$refs.dialog1.productDialog = true;
+      // })
+      this.$router.push({
+        path: '/salesManagement/contractDetail',
+        query: {
+          offerGuid: row.contract_code
+        }
+      });
     },
     getComparisonCheck({ index, row }, done){
       this.checkShow=true;
@@ -86,7 +85,7 @@ export default {
       this.$nextTick(()=>{
         this.$refs.check.checkDialog = true;
       })
-      
+
     },
     closeDialog(){
       this.checkShow=false;

@@ -128,7 +128,7 @@ const frameIn = [
     component: layoutHeaderAside,
     children: [
       { path: 'sales', name: 'salesManagement-sales', component: _import('salesManagement/sales'), meta: { ...meta, title: '销售管理',cache:false  } },
-      { path: 'productDetail', name: 'salesManagement-productDetail', component: _import('salesManagement/productDetail'), meta: { ...meta, title: '销售产品信息' } },
+      { path: 'contractDetail', name: 'salesManagement-contractDetail', component: _import('salesManagement/contractDetail'), meta: { ...meta, title: '承揽合同' } },
     ]
   },
   {
