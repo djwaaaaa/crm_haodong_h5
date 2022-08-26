@@ -201,6 +201,9 @@ export const crudOptions = (vm) => {
         title: '项目编号',
         key: 'project_code',
         type: 'text',
+        form:{
+          disabled:true
+        }
       },
       {
         title: '项目名称',
@@ -255,7 +258,17 @@ export const crudOptions = (vm) => {
       {
         title: '合同说明',
         key: 'contract_description',
-        type: 'text',
+        width:500,
+        type: 'text-area',
+        viewForm: {
+                  component: {
+                    name: null,
+                    render (h, scope) {
+                      // console.log(scope.9666)
+                      return <div>{scope.value}</div>
+                    }
+                  }
+                }
       },
     ]
   }

@@ -74,7 +74,8 @@ export default {
       this.$router.push({
         path: '/salesManagement/contractDetail',
         query: {
-          offerGuid: row.contract_code
+          offerGuid: row.contract_code,
+          info:row
         }
       });
     },
