@@ -21,6 +21,8 @@
 .d2-contentmenu-list .d2-contentmenu-item:hover{background:#ecf5ff;color:#66b1ff}
 .page-login .page-login--form .page-login--options{color:#409eff}
 .page .btn-group .btn-group__btn.btn-group__btn--link[data-v-f1a174c4]{color:#409eff}
+.contractDetail table td input[data-v-84b705ba]:focus{outline:1px solid #66b1ff}
+.contractDetail table td textarea[data-v-84b705ba]:focus{outline:1px solid #66b1ff}
 .el-pagination button:hover:not(:disabled){color:#409eff}
 .el-pagination__sizes .el-input .el-input__inner:hover{border-color:#409eff}
 .el-pagination.is-background .el-pager li:not(.disabled):hover{color:#409eff}
