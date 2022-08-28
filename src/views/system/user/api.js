@@ -12,7 +12,7 @@ export function GetList (query) {
   */
   return request({
     url: 'system.admin/index',
-    method: 'get',
+    method: 'post',
     data: {
       page:query.current,
       limit:query.size,

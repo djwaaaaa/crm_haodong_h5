@@ -3,7 +3,7 @@
     <div class="contractDetail">
       <table border="2">
           <tr>
-            <th colspan="18" class="h">
+            <th colspan="19" class="h">
               <div class="header">
                 <img src="./images/logo.png" alt="">
                 <h1>常州浩东净化承揽加工合同</h1>
@@ -12,21 +12,21 @@
           </tr>
           <tr>
           	<td colspan="2" class="g tr">供方：</td>
-            <td colspan="10"><input type="" name="" id=""  v-model="row.company_name" @change="changeEdmit"/></td>
+            <td colspan="10"><input type="text" v-model="row.company_name" @change="changeEdmit"/></td>
             <td colspan="2" class="g tr">合同编号：</td>
-            <td colspan="4"><input type="" name="" id="" v-model="row.contract_code" @change="changeEdmit" /></td>
+            <td colspan="5"><input type="text" name="" id="" v-model="row.contract_code" @change="changeEdmit" /></td>
           </tr>
           <tr>
           	<td colspan="2" class="g tr">需方：</td>
             <td colspan="10"><input type="text" v-model="row.customer_company_name" @change="changeEdmit" ></td>
             <td colspan="2"class="g tr">签订日期：</td>
-            <td colspan="4"><input type="text" v-model="row.sign_date" @change="changeEdmit"></td>
+            <td colspan="5"><input type="text" v-model="row.sign_date" @change="changeEdmit"></td>
           </tr>
           <tr>
           	<td colspan="2" class="g tr">项目名称：</td>
             <td colspan="10"><input type="text" v-model="row.project_name" @change="changeEdmit"></td>
             <td colspan="2" class="g tr">交货日期：</td>
-            <td colspan="4"><input type="text" v-model="row.delivery_date" @change="changeEdmit"></td>
+            <td colspan="5"><input type="text" v-model="row.delivery_date" @change="changeEdmit"></td>
           </tr>
           <tr>
           	<th>序号</th>
@@ -47,9 +47,10 @@
             <th>含税单价</th>
             <th>含税总价</th>
             <th>备注</th>
+            <th><div class="addProduct" @click="addProduct">新增</div></th>
           </tr>
           <tr v-for="(info,index) in contractArr" :key="index">
-            <td class="g">{{index+1}}</td>
+            <td class="g tc">{{index+1}}</td>
             <td><input type="text" v-model="info.product_name" @change="edmit(info)"></td>
             <td><input type="text" v-model="info.customer_product_name" @change="edmit(info)"></td>
             <td><input type="text" v-model="info.tax_code" @change="edmit(info)"></td>
@@ -67,109 +68,84 @@
             <td><input type="text" v-model="info.tax_price" @change="edmit(info)"></td>
             <td><input type="text" v-model="info.tax_total_price" @change="edmit(info)"></td>
             <td><input type="text" v-model="info.remark" @change="edmit(info)"></td>
+            <td><div class="addProduct delete" @click="deleteProduct(info)">删除</div></td>
           </tr>
           <tr>
           	<td colspan="2" class="g tr">金额：</td>
-            <td colspan="13"><input type="text"></td>
+            <td colspan="13">{{amount}}</td>
             <td colspan="1" class="g tr">合计：</td>
-            <td colspan="2"><input type="text"></td>
+            <td colspan="3">{{total}}</td>
           </tr>
           <tr>
-            <td colspan="18" class="g">合同说明：</td>
+            <td colspan="19" class="g">合同说明：</td>
           </tr>
           <tr>
-            <td colspan="18"> <textarea name="" id="" cols="30" rows="10" @change="changeEdmit">{{row.contract_description}}</textarea></td>
+            <td colspan="19"> <textarea name="" id="" cols="30" rows="10" @change="changeEdmit">{{row.contract_description}}</textarea></td>
           </tr>
-         <!-- <tr>
-            <td colspan="18">四、交(提)货地点:</td>
-          </tr>
-          <tr>
-            <td colspan="18">五、运输方式及到达站港和费用负担:运输费用由供方承担。</td>
-          </tr>
-          <tr>
-            <td colspan="18">六、包装标准及费用:按国家标准，纸箱包装，费用由供方负责。</td>
-          </tr>
-          <tr>
-            <td colspan="18">七、验收标准方法及提出异议的期限:按供方企业标准验收，提出异议时间为货到后一周内。</td>
-          </tr>
-          <tr>
-            <td colspan="18">八、结算方式及期限:预付30%，预付款到账后合同生效、发货前付清余款。收到货款后开具发票。</td>
-          </tr>
-          <tr>
-            <td colspan="18">九、违约责任:由违约方按合同总价的30%承担违约责任。</td>
-          </tr>
-          <tr>
-            <td colspan="18">十、解决合同纠纷的方式。双方协商解决，协商不成诉讼解决，双方均可向各处所在地的法院提起诉讼。</td>
-          </tr>
-          <tr>
-            <td colspan="18">十一、合同签订地:常州市。</td>
-          </tr>
-          <tr>
-            <td colspan="18">十二、其他:(1)供方负责提供检测报告，产品合格证。(2)：附件与本合同具有同等法律效力</td> -->
           </tr>
           <tr>
             <td colspan="10" class="tc">供方信息:</td>
-            <td colspan="8" class="tc">需方信息:</td>
+            <td colspan="9" class="tc">需方信息:</td>
           </tr>
           <tr>
             <td colspan="2" class="tr">单位名称(章)∶</td>
             <td colspan="8"><input type="text"   v-model="row.company_name" @change="changeEdmit"></td>
             <td colspan="2" class="tr">单位名称(章)∶</td>
-            <td colspan="6"><input type="text" v-model="row.company" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.company" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">工厂地址:</td>
             <td colspan="8"><input type="text"  v-model="row.address" @change="changeEdmit"></td>
             <td colspan="2" class="tr">单位地址∶</td>
-            <td colspan="6"><input type="text" v-model="row.customer_address" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_address" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">法定代表人:</td>
             <td colspan="8"><input type="text"   v-model="row.legal_representative" @change="changeEdmit"></td>
             <td colspan="2" class="tr">法定代表人:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_legal_representative" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_legal_representative" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">委托代理人(签章):</td>
             <td colspan="8"><input type="text" v-model="row.agent" @change="changeEdmit"></td>
             <td colspan="2" class="tr">委托代理人(签章):</td>
-            <td colspan="6"><input type="text" v-model="row.customer_agent" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_agent" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">手机:</td>
             <td colspan="8"><input type="text" v-model="row.phone" @change="changeEdmit"></td>
             <td colspan="2" class="tr">手机:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_phone" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_phone" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">电话:</td>
             <td colspan="8"><input type="text" v-model="row.telephone" @change="changeEdmit"></td>
             <td colspan="2" class="tr">电话:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_telephone" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_telephone" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">传真:</td>
             <td colspan="8"><input type="text" v-model="row.fax" @change="changeEdmit"></td>
             <td colspan="2" class="tr">传真:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_fax" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_fax" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">电邮:</td>
             <td colspan="8"><input type="text" v-model="row.email" @change="changeEdmit"></td>
             <td colspan="2" class="tr">电邮:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_email" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_email" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">开户银行:</td>
             <td colspan="8"><input type="text" v-model="row.bank" @change="changeEdmit"></td>
             <td colspan="2" class="tr">开户银行:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_bank" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_bank" @change="changeEdmit"></td>
           </tr>
           <tr>
             <td colspan="2" class="tr">帐号:</td>
             <td colspan="8"><input type="text" v-model="row.account" @change="changeEdmit"></td>
             <td colspan="2" class="tr">帐号:</td>
-            <td colspan="6"><input type="text" v-model="row.customer_account" @change="changeEdmit"></td>
+            <td colspan="7"><input type="text" v-model="row.customer_account" @change="changeEdmit"></td>
           </tr>
       </table>
     </div>
@@ -185,30 +161,66 @@ export default {
       productDialog:true,
       order_code:null,
       contractArr:[
-        {
-                    "id":1,
-                    "sale_id":"3",	// 新增字段
-                    "contract_code":"111111",
-                    "product_name":"产品名称",
-                    "customer_product_name":"客户产品名称",	// 新增字段
-                    "tax_code":"税码",	// 新增字段
-                    "invoice_product_name":"开票产品名称",	// 新增字段
-                    "product_img":"产品图片",	// 新增字段
-                    "specs_value":"规格",
-                    "color":"颜色",
-                    "technical_param":"技术参数",	// 新增字段
-                    "unit":"单位",
-                    "count":"数量",
-                    "no_tax_price":"不含税单价",	// 新增字段
-                    "no_tax_total_price":"不含税总单价",	// 新增字段
-                    "tax_rate":"税率",	// 新增字段
-                    "tax_amount":"税额",	// 新增字段
-                    "tax_price":"含税单价",	// 新增字段
-                    "tax_total_price":"含税总价",	// 新增字段
-                    "remark":"备注",	// 新增字段
-        }
+        // {
+        //             "id":1,
+        //             "sale_id":"3",	// 新增字段
+        //             "contract_code":"111111",
+        //             "product_name":"产品名称",
+        //             "customer_product_name":"客户产品名称",	// 新增字段
+        //             "tax_code":"税码",	// 新增字段
+        //             "invoice_product_name":"开票产品名称",	// 新增字段
+        //             "product_img":"产品图片",	// 新增字段
+        //             "specs_value":"规格",
+        //             "color":"颜色",
+        //             "technical_param":"技术参数",	// 新增字段
+        //             "unit":"单位",
+        //             "count":"数量",
+        //             "no_tax_price":"不含税单价",	// 新增字段
+        //             "no_tax_total_price":"不含税总单价",	// 新增字段
+        //             "tax_rate":"税率",	// 新增字段
+        //             "tax_amount":"税额",	// 新增字段
+        //             "tax_price":"含税单价",	// 新增字段
+        //             "tax_total_price":"含税总价",	// 新增字段
+        //             "remark":"备注",	// 新增字段
+        // }
       ],
-      row:null,
+      row:{
+    "contract_code": "",
+    "company": "",
+    "company_name": "",
+    "address": "",
+    "legal_representative": "",
+    "agent": "",
+    "phone": "",
+    "telephone": "",
+    "fax": "",
+    "email": "",
+    "bank": "",
+    "account": "",
+    "customer_company": "",
+    "customer_company_name": "",
+    "customer_address": "",
+    "customer_legal_representative": "",
+    "customer_agent": "",
+    "customer_phone": "",
+    "customer_telephone": "",
+    "customer_fax": "",
+    "customer_email": "",
+    "customer_bank": "",
+    "customer_account": "",
+    "contract_type": 2,
+    "contract_status": 1,
+    "project_code": "",
+    "project_name": "",
+    "sign_date": "",
+    "delivery_date": "",
+    "total_price": "",
+    "advance_payment_rate": '',
+    "invoice_flag": 1,
+    "contract_description": ""
+},
+      amount:null,
+      total:null
     }
   },
   created() {
@@ -225,7 +237,11 @@ export default {
         }
       }).then(ret => {
         let res = ret.data;
+        _this.amount = 0;
+        _this.total = 0;
         for (const key in res) {
+           _this.amount = _this.amount + (res[key].tax_total_price - 0);
+           _this.total = _this.total+ (res[key].count - 0);
            delete res[key].matter_code;
            delete res[key].specs_x;
            delete res[key].specs_y;
@@ -239,12 +255,41 @@ export default {
            delete res[key].delete_time
         }
         _this.contractArr = res;
-
-        console.log(ret,360)
+      })
+    },
+    addProduct(){
+      let _this = this;
+      console.log(this.$route.query.offerGuid,this.row.contract_code)
+      return request({
+        url: 'contract.sale_product/add',
+        method: 'post',
+        data: {
+          sale_id:this.$route.query.offerGuid,
+          contract_code:this.row.contract_code
+        }
+      }).then(ret => {
+        this.getList();
+        this.$message({
+          message: '添加成功',
+          type: 'success'
+        });
+      })
+    },
+    deleteProduct(info){
+      let _this = this;
+      return request({
+        url: 'contract.sale_product/delete',
+        method: 'post',
+        data:info
+      }).then(ret => {
+        this.getList();
+        this.$message({
+          message: '删除成功',
+          type: 'success'
+        });
       })
     },
     edmit(info){
-      console.log(info,852)
       let _this = this;
       info.sale_id = this.$route.query.offerGuid;
       return request({
@@ -252,25 +297,38 @@ export default {
         method: 'post',
         data: info
       }).then(ret => {
+        this.getList();
         this.$message({
           message: '编辑成功',
           type: 'success'
         });
-        console.log(ret,360)
       })
     },
     changeEdmit(){
       let _this = this;
-      return request({
-        url: 'contract.sale/edit',
-        method: 'post',
-        data: this.row
-      }).then(ret => {
-        this.$message({
-          message: '编辑成功',
-          type: 'success'
-        });
-      })
+      if(!this.$route.query.add){
+        return request({
+          url: 'contract.sale/add',
+          method: 'post',
+          data: obj
+        }).then(ret => {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          });
+        })
+      }else{
+        return request({
+          url: 'contract.sale/edit',
+          method: 'post',
+          data: this.row
+        }).then(ret => {
+          this.$message({
+            message: '编辑成功',
+            type: 'success'
+          });
+        })
+      }
     },
     close(){
       this.productDialog = false;
@@ -279,9 +337,11 @@ export default {
 
   },
   mounted(){
-    this.row= this.$route.query.info;
-    console.log(this.$route.query.info,600)
-    this.getList();
+    if(!this.$route.query.add){
+      this.row=JSON.parse(this.$route.query.info);
+      this.getList();
+    }
+    console.log(this.$route.query.info,600,this.row)
   },
   watch:{
 
@@ -352,6 +412,20 @@ export default {
         background:#d7dbe4;
         &.h{
           background:#FFFFFF;
+        }
+      }
+      .addProduct{
+        width: 40px;
+        padding: 5px 2px;
+        text-align: center;
+        background-color: #409EFF;
+        border-radius: 4px;
+        font-size:12px;
+        color:#FFFFFF;
+        cursor: pointer;
+        margin: auto;
+        &.delete{
+          background-color: #F56C6C;
         }
       }
     }

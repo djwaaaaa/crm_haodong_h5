@@ -75,6 +75,7 @@ export const crudOptions = (vm) => {
       {
         title: '项目名称',
         key: 'project_name',
+        width: 200,
         search: { 
           show: true,
           component:{

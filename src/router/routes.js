@@ -78,6 +78,15 @@ const frameIn = [
         },
         component: _import('system/role')
       },
+      {
+        path: 'resource',
+        name: 'system-resource',
+        meta: {
+          title: '资源管理',
+          auth: true
+        },
+        component: _import('system/resource')
+      },
     ]
   },
   {
