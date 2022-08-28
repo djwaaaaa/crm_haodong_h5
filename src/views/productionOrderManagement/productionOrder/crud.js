@@ -1,3 +1,4 @@
+import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
@@ -122,12 +123,29 @@ export const crudOptions = (vm) => {
         search: { show: true },
         form:{
           disabled:true
-        }
+        },
+        type: 'text',
       },
       {
         title: '项目名称',
         key: 'project_name',
-        type: 'text',
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: "", label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_name,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
       },
       {
         title: '合计',

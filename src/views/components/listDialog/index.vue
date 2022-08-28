@@ -27,6 +27,7 @@ export default {
       listDialog:true,
       productDialog:true,
       itemList:null,
+      item:null
     }
   },
   props: ['itemName',"listDialogShow","changeItemName"],
@@ -44,7 +45,10 @@ export default {
       })
     },
     chooseItem(item){
-      this.changeItemName(item.project_name);
+      console.log(2)
+      this.item = item;
+      this.$emit("changeItemName",item.project_name)
+      // this.changeItemName(item.project_name);
       this.close();
     },
     close(){

@@ -28,6 +28,14 @@ export const menuHeader = supplementPath([
     ]
   },
   {
+    path: '/productProcessManagement',
+    title: '产品工序',
+    icon: 'folder-o',
+    children: [
+      { path: '/productProcessManagement/productProcess', title: '产品工序' },
+    ]
+  },
+  {
     path: '/pm',
     title: '项目管理',
     icon: 'folder-o',
@@ -88,6 +96,14 @@ export const menuAside = supplementPath([
     children: [
       { path: '/system/user', title: '用户管理' },
       { path: '/system/role', title: '角色管理' },
+    ]
+  },
+  {
+    path: '/productProcessManagement',
+    title: '产品工序',
+    icon: 'folder-o',
+    children: [
+      { path: '/productProcessManagement/productProcess', title: '产品工序' },
     ]
   },
   {

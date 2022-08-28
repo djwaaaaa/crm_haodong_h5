@@ -1,3 +1,4 @@
+import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
@@ -43,9 +44,31 @@ export const crudOptions = (vm) => {
       {
         title: '销售合同编号',
         key: 'contract_code',
-        type: 'text',
         width: 100,
         search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getSaleList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "contract.sale/getSaleList",
+              method: 'post'
+            }).then(ret => {
+              console.log(123456,ret)
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].contract_code,label:projectList[i].contract_code})
+              }
+              return arr
+            })
+          }
+        },
+        form:{
+          component:{
+            value:null,
+          }
+        }
       },
       {
         title: '供方公司名称',

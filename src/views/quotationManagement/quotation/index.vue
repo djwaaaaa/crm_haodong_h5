@@ -1,11 +1,11 @@
 <template>
   <d2-container  :class="{'page-compact':crud.pageOptions.compact}">
-    <template slot="header" @click="chooseList">报价管理</template>
+    <template slot="header" >报价管理</template>
     <d2-crud-x
         ref="d2Crud"
         v-bind="_crudProps"
         v-on="_crudListeners"
-         @form-data-change="handleFormDataChange"
+        @form-data-change="handleFormDataChange"
         @productDetail='getProductDetail'
         @recordCommunication="getRecordCommunication"
     >
@@ -30,7 +30,7 @@
     <product-Detail ref="dialog" v-if="dialogShow" :offerGuid="offer_guid" :productDetail="productDetail" @closeProductDetail="closeProductDetail"></product-Detail>
     <!-- <productdetail ref="dialog" v-if="dialogShow"></productdetail> -->
     <communication ref="comm" v-if="commShow" :offerGuid="offer_guid" @closeCommunicationDialog="closeCommunicationDialog" :productDetail="productDetail"></communication>
-    <list-Dialog ref="listDialogRef" v-if="listDialogShow" :changeItemName="changeItemName" :listDialogShow="listDialogShow"></list-Dialog>
+    <list-Dialog ref="listDialogRef" v-if="listDialogShow" @changeItemName="changeItemName" :listDialogShow="listDialogShow"></list-Dialog>
   </d2-container>
 </template>
 
@@ -59,21 +59,20 @@ export default {
       listDialogShow:false,
       offer_guid:null,
       productDetail:null,
-      itemName:"",
-      // addTemplate:{
-      //   project_name: {
-      //     value: '888',
-      //   },
-      // }
+      itemName:"123",
+      projectList:[]
     }
   },
   methods: {
-
+    initAfter(){
+       // this.crud.rowHandle.edit.disabled = true;
+    },
     handleFormDataChange ({ key, value }) {
-          console.log(key)
-          console.log(value)
+          console.log(key,7456)
+          console.log(value,8963)
         },
     getCrudOptions () {
+      console.log("执行")
       return crudOptions(this)
     },
     pageRequest (query) {
@@ -122,26 +121,58 @@ export default {
       this.dialogShow=false;
     },
     chooseList(){
+      this.itemName = "就是你";
       console.log(123456)
-      this.listDialogShow = true;
-      this.$nextTick(()=>{
-        this.$refs.listDialogRef.listDialog = true;
-      })
+
+      // this.listDialogShow = true;
+      // this.$nextTick(()=>{
+      //   this.$refs.listDialogRef.listDialog = true;
+      // })
     },
     changeItemName(name){
-      console.log(this.$refs.d2Crud,1000,crudOptions(this).columns[3].form.component.value)
+      console.log(this.crud,3)
+      // console.log(this.$refs.d2Crud,1000,crudOptions(this).columns[3].form.component.value)
       // crudOptions(this).columns[3].form.component.value = "666777";
       // return name;
-      this.itemName = name;
+      this.itemName = "就是你";
+      this.crud.addTemplate.project_name.value="777777";
       console.log(this.itemName,777)
       // this.pageRequest({project_name:name});
-    }
+    },
+    getProjectList(kw){
+      let _this = this;
+      return request({
+        url: 'project/getProjectList',
+        method: 'post',
+        data: {
+          kw:kw
+        }
+      }).then(ret => {
+        console.log(ret.data,333)
+        let projectList = ret.data;
+        let arr = [{ value: "", label: '请选择'}];
+        for (let i = 0; i < projectList.length; i++) {
+          arr.push({value:projectList[i].project_name,label:projectList[i].project_name})
+        }
+        console.log(arr);
+      })
+    },
+  },
+  mounted(){
+    this.getProjectList();
   },
   watch:{
     itemName(){
-      console.log(this.itemName,999888)
-      crudOptions(this)
+      console.log("变化",this.itemName,999888)
+      this.getCrudOptions();
+      // crudOptions(this.itemName)
+    },
+    laaa(){
+      console.log("变化了")
     }
+    // $refs.item(){
+    //   console.log("变化了")
+    // }
   }
 }
 </script>

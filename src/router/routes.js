@@ -81,6 +81,16 @@ const frameIn = [
     ]
   },
   {
+    path: '/productProcessManagement',
+    name: 'productProcessManagement',
+    meta,
+    redirect: { name: 'productProcess' },
+    component: layoutHeaderAside,
+    children: [
+      { path: 'productProcess', name: 'productProcess', component: _import('productProcessManagement/productProcess'), meta: { ...meta, title: '产品工序' } },
+    ]
+  },
+  {
     path: '/pm',
     name: 'pm',
     meta,
