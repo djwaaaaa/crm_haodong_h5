@@ -45,6 +45,14 @@ export const crudOptions = (vm) => {
         }
       },
       {
+        title: '项目编号',
+        key: 'project_code',
+        type: 'text',
+        form:{
+          disabled:true
+        }
+      },
+      {
         title: '所属项目',
         key: 'project_name',
         search: { show: true },
@@ -65,11 +73,11 @@ export const crudOptions = (vm) => {
             })
           }
         },
-        form:{
-          component:{
-            value:null,
-          }
-        }
+        // form: {
+        //   component:{
+        //     value:null,
+        //   }
+        // }
       },
       {
         title: '销售合同编号',
@@ -222,14 +230,6 @@ export const crudOptions = (vm) => {
             value: 1 // 默认值
           }
         },
-      },
-      {
-        title: '项目编号',
-        key: 'project_code',
-        type: 'text',
-        form:{
-          disabled:true
-        }
       },
       {
         title: '签订日期',
