@@ -1,0 +1,1 @@
+.formItem{display:-webkit-box;display:-ms-flexbox;display:flex;margin-bottom:20px}.formItem p{width:20%}.formItem p.name:before{content:"*";color:#f56c6c;margin-right:4px}.formItem .confirmPasswordError .el-input__inner,.formItem .passwordError .el-input__inner{border:1px solid #f56c6c}
