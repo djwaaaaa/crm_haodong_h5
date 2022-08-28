@@ -87,7 +87,7 @@ Vue.use(D2pFullEditor, {
 Vue.use(D2pDemoExtend)
 Vue.use(D2pFileUploader)
 Vue.use(D2pUploader, {
-  defaultType: 'cos',
+  defaultType: 'alioss',
   cos: {
     domain: 'https://d2p-demo-1251260344.cos.ap-guangzhou.myqcloud.com',
     bucket: 'd2p-demo-1251260344',
@@ -95,9 +95,10 @@ Vue.use(D2pUploader, {
     secretId: '', //
     secretKey: '', // 传了secretKey 和secretId 代表使用本地签名模式（不安全，生产环境不推荐）
     getAuthorization  (custom) { // 不传secretKey代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
+    console.log(custom,96996)
       return request({
-        url: '/upload/cos/getAuthorization',
-        method: 'get'
+        url: 'ajax/upload',
+        method: 'post'
       }).then(ret => {
         // 返回结构如下
         // ret.data:{
@@ -111,15 +112,19 @@ Vue.use(D2pUploader, {
     }
   },
   alioss: {
-    domain: 'https://d2p-demo.oss-cn-shenzhen.aliyuncs.com',
-    bucket: 'd2p-demo',
-    region: 'oss-cn-shenzhen',
-    accessKeyId: '',
-    accessKeySecret: '',
+    // domain: 'https://d2p-demo.oss-cn-shenzhen.aliyuncs.com',
+    // bucket: 'd2p-demo',
+    // region: 'oss-cn-shenzhen',
+    // accessKeyId: '',
+    // accessKeySecret: '',
     getAuthorization  (custom, context) { // 不传accessKeySecret代表使用临时签名模式,此时此参数必传（安全，生产环境推荐）
+    console.log(custom.file,96996222222,context)
       return request({
-        url: '/upload/alioss/getAuthorization',
-        method: 'get'
+        url: 'ajax/upload',
+        method: 'post',
+        data:{
+          file:custom.file
+        }
       }).then(ret => {
         return ret.data
       })

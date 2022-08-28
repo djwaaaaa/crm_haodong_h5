@@ -1,5 +1,36 @@
 export const crudOptions = (vm) => {
   return {
+    rowHandle:{
+      fixed: 'right',
+      width: 360,
+      custom: [
+        {
+          thin: true,
+          text: "设置密码",
+          type: 'success',
+          size: 'small',
+          emit: 'setPassword',
+          icon: 'el-icon-setting',
+          disabled () {
+            // return !vm.hasPermissions('usersphere:user:authz')
+          }
+        },
+        {
+          thin: true,
+          text: "授权",
+          type: 'warning',
+          size: 'small',
+          emit: 'authz',
+          icon: 'el-icon-s-flag',
+          disabled () {
+            // return !vm.hasPermissions('usersphere:user:authz')
+          }
+        }
+      ],
+      view:{
+        show:false
+      }
+    },
     pageOptions: {
       compact: false
     },
@@ -18,20 +49,28 @@ export const crudOptions = (vm) => {
         key: 'id',
         width: 60,
         // search: { show: true },
-        sortable: true
+        sortable: true,
+        form:{
+          disabled:true
+        },
       },
       {
         title: '排序',
         key: 'sort',
         sortable: true,
         type: 'text',
-        width: 100,
+        width: 60,
         sortable: true
       },
       {
         title: '用户名',
         key: 'username',
         type: 'text',
+      },
+      {
+        title: '真实姓名',
+        key: 'realname',
+        type: 'text',
       },
       {
         title: '头像',
@@ -47,6 +86,9 @@ export const crudOptions = (vm) => {
         title: '登陆次数',
         key: 'login_num',
         type: 'text',
+        form:{
+          disabled:true
+        },
       },
       {
         title: '备注',
@@ -57,12 +99,25 @@ export const crudOptions = (vm) => {
         title: '状态',
         key: 'status',
         type: 'text',
+        type: 'dict-switch',
+        dict: { data: [{ value: 1, label: '开启' }, { value: 0, label: '关闭' }] },
+        form: {
+          component: {
+            value:1,
+            show (context) {
+              return true
+            }
+          }
+        },
       },
       {
         title: '创建日期',
         key: 'create_time',
         type: 'text',
         width: 150,
+        form:{
+          disabled:true
+        },
       },
     ]
   }
