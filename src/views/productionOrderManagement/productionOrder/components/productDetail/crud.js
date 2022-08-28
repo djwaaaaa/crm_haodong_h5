@@ -34,7 +34,11 @@ export const crudOptions = (vm) => {
         type: 'text',
         width: 150,
         form: {
-          disabled: true,
+          component: {
+            value: vm.orderCode,
+            readonly: true,
+            show: false
+          }
         }
       },
       {
@@ -84,20 +88,39 @@ export const crudOptions = (vm) => {
         type: 'text',
       },
       {
-        title: '说明',
-        key: 'explain',
-        type: 'text',
-        width:300
-      },
-      {
-        title: '客户要求',
-        key: 'requirementl',
-        type: 'text',
-      },
-      {
         title: '颜色',
         key: 'color',
         type: 'text',
+      },
+      {
+        title: '说明',
+        key: 'explain',
+        width: 500,
+        type: 'text-area',
+        viewForm: {
+          component: {
+            name: null,
+            render (h, scope) {
+              // console.log(scope.9666)
+              return <div>{scope.value}</div>
+            }
+          }
+        }
+      },
+      {
+        title: '客户要求',
+        key: 'requirement',
+        width: 500,
+        type: 'text-area',
+        viewForm: {
+          component: {
+            name: null,
+            render (h, scope) {
+              // console.log(scope.9666)
+              return <div>{scope.value}</div>
+            }
+          }
+        }
       },
     ]
   }

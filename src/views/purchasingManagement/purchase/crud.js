@@ -128,7 +128,17 @@ export const crudOptions = (vm) => {
       {
         title: '合同说明',
         key: 'explain',
-        type: 'text',
+        width: 500,
+        type: 'text-area',
+        viewForm: {
+          component: {
+            name: null,
+            render (h, scope) {
+              // console.log(scope.9666)
+              return <div>{scope.value}</div>
+            }
+          }
+        }
       },
       {
         title: '采购状态',

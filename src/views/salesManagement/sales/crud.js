@@ -45,6 +45,33 @@ export const crudOptions = (vm) => {
         }
       },
       {
+        title: '所属项目',
+        key: 'project_name',
+        search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
+        form:{
+          component:{
+            value:null,
+          }
+        }
+      },
+      {
         title: '销售合同编号',
         key: 'contract_code',
         sortable: true,
@@ -68,12 +95,12 @@ export const crudOptions = (vm) => {
         type: 'text',
       },
       {
-        title: '供方法定代表人',
+        title: '供方法定代表',
         key: 'legal_representative',
         type: 'text',
       },
       {
-        title: '供方委托代理人',
+        title: '供方委托代理',
         key: 'agent',
         type: 'text',
       },
@@ -124,12 +151,12 @@ export const crudOptions = (vm) => {
         type: 'text',
       },
       {
-        title: '需方法定代表人',
+        title: '需方法定代表',
         key: 'customer_legal_representative',
         type: 'text',
       },
       {
-        title: '需方委托代理人',
+        title: '需方委托代理',
         key: 'customer_agent',
         type: 'text',
       },
@@ -175,10 +202,8 @@ export const crudOptions = (vm) => {
           ]
         },
         form: {
-          component: {
-            value: 1 // 默认值
-          }
-        },
+          disabled: true
+        }
       },
       {
         title: '合同状态',
@@ -204,33 +229,6 @@ export const crudOptions = (vm) => {
         type: 'text',
         form:{
           disabled:true
-        }
-      },
-      {
-        title: '项目名称',
-        key: 'project_name',
-        search: { show: true },
-        type: 'select',
-        dict: {
-          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
-          getData (url, dict) { // 覆盖全局获取字典请求配置
-            return request({
-              url: "project/getProjectList",
-              method: 'post'
-            }).then(ret => {
-              let projectList = ret.data;
-              let arr = [{ value: null, label: '请选择'}];
-              for (let i = 0; i < projectList.length; i++) {
-                arr.push({value:projectList[i].project_name,label:projectList[i].project_name})
-              }
-              return arr
-            })
-          }
-        },
-        form:{
-          component:{
-            value:null,
-          }
         }
       },
       {
@@ -272,23 +270,29 @@ export const crudOptions = (vm) => {
       {
         title: '是否开票',
         key: 'invoice_flag',
-        type: 'text',
+        type: 'select',
+        dict: {
+          data: [
+            { value: 1, label: '是' },
+            { value: 2, label: '否' }
+          ]
+        }
       },
       {
         title: '合同说明',
         key: 'contract_description',
-        width:500,
+        width: 500,
         type: 'text-area',
         viewForm: {
-                  component: {
-                    name: null,
-                    render (h, scope) {
-                      // console.log(scope.9666)
-                      return <div>{scope.value}</div>
-                    }
-                  }
-                }
-      },
+          component: {
+            name: null,
+            render (h, scope) {
+              // console.log(scope.9666)
+              return <div>{scope.value}</div>
+            }
+          }
+        }
+      }
     ]
   }
 }

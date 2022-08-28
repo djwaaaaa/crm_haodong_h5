@@ -27,7 +27,7 @@ export const crudOptions = (vm) => {
         key: 'invoice_type',
         sortable: true,
         type: 'select',
-        width: 100,
+        width: 120,
         dict: {
           data: [
             { value: 1, label: '增值税专用发票' },
@@ -39,7 +39,10 @@ export const crudOptions = (vm) => {
       {
         title: '发票所属合同编号',
         key: 'contract_code',
-        type: 'text'
+        type: 'text',
+        form: {
+          disabled: true
+        }
       },
       // {
       //   title: '申请人ID',
@@ -49,7 +52,10 @@ export const crudOptions = (vm) => {
       {
         title: '申请人',
         key: 'realname',
-        type: 'text'
+        type: 'text',
+        form: {
+          disabled: true
+        }
       },
       {
         title: '发票内容',
@@ -88,11 +94,12 @@ export const crudOptions = (vm) => {
         type: 'datetime',
         width: 150,
         form: {
-          component: {
-            props: {
-              valueFormat: 'yyyy-MM-dd HH-mm-ss'
-            }
-          }
+          disabled: true
+          // component: {
+          //   props: {
+          //     valueFormat: 'yyyy-MM-dd HH-mm-ss'
+          //   }
+          // }
         }
       },
     ]

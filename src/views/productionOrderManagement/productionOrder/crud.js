@@ -84,14 +84,14 @@ export const crudOptions = (vm) => {
       {
         title: '订单状态',
         key: 'status',
-        type: 'text',
-        // type: 'select',
-        // dict: {
-        //   url: '/dicts/OpenStatusEnum'
-        // },
-        // view: { // 查看时的该字段单独配置
-        //   component: { span: 18 }
-        // }
+        type: 'select',
+        dict: {
+          data: [
+            { value: 1, label: '制作中' },
+            { value: 2, label: '收货中' },
+            { value: 3, label: '已收货' }
+          ]
+        }
       },
       {
         title: '计划交货日期',
@@ -140,7 +140,7 @@ export const crudOptions = (vm) => {
               let projectList = ret.data;
               let arr = [{ value: "", label: '请选择'}];
               for (let i = 0; i < projectList.length; i++) {
-                arr.push({value:projectList[i].project_name,label:projectList[i].project_name})
+                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
               }
               return arr
             })
