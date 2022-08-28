@@ -1,3 +1,4 @@
+import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
@@ -30,7 +31,7 @@ export const crudOptions = (vm) => {
       height: '100%',
       events:{
         'expand-change':(event)=>{
-          console.log(event,6666)
+          console.log(event,6666000)
         }
       }
     },
@@ -74,18 +75,44 @@ export const crudOptions = (vm) => {
       {
         title: '项目名称',
         key: 'project_name',
-        type: 'text',
-        search: { show: true },
+        search: { 
+          show: true,
+          component:{
+            props: {
+              elProps: {
+                // filterable: false
+              }
+            },
+          }
+        },
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: "", label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_name,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
         form:{
           component:{
-            value:vm.itemName,
+            value:"",
             on:{ //除input change事件外，更多组件事件监听
               focus(event){
-                vm.chooseList();
+                // vm.chooseList();
                 console.log(event,9999)
+                // event.component.value=vm.itemName;
               }, //监听表单组件的select事件
               blur(event){
-                vm.changeItemName();
+                // vm.changeItemName("kkk");
                 console.log(event,9999222)
                 // event.component.value=vm.itemName;
               },
