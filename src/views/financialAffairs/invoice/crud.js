@@ -1,3 +1,4 @@
+import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
@@ -34,29 +35,89 @@ export const crudOptions = (vm) => {
             { value: 2, label: '增值税普通发票' },
             { value: 3, label: '普通发票' }
           ]
+        },
+        form: {
+          rules: [
+            {
+              required: true,
+              message: '请选择发票类型'
+            }
+          ],
         }
       },
       {
-        title: '发票所属合同编号',
+        title: '销售合同编号',
         key: 'contract_code',
-        type: 'text',
+        width: 100,
+        search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getSaleList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "contract.sale/getSaleList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].contract_code,label:projectList[i].contract_code})
+              }
+              return arr
+            })
+          }
+        },
         form: {
-          disabled: true
+          rules: [
+            {
+              required: true,
+              message: '请选择销售合同编号'
+            }
+          ],
+        }
+      },
+      {
+        title: '申请人',
+        key: 'admin_id',
+        width: 100,
+        search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getAdminList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "system.admin/getAdminList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].id,label:projectList[i].realname})
+              }
+              return arr
+            })
+          }
+        },
+        form: {
+          rules: [
+            {
+              required: true,
+              message: '请选择申请人'
+            }
+          ],
+          component: {
+            value: null
+          }
         }
       },
       // {
-      //   title: '申请人ID',
-      //   key: 'admin_id',
+      //   title: '申请人',
+      //   key: 'realname',
       //   type: 'text',
+      //   form: {
+      //     disabled: true
+      //   }
       // },
-      {
-        title: '申请人',
-        key: 'realname',
-        type: 'text',
-        form: {
-          disabled: true
-        }
-      },
       {
         title: '发票内容',
         key: 'invoice_content',
