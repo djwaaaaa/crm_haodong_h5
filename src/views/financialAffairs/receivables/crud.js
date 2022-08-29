@@ -27,21 +27,67 @@ export const crudOptions = (vm) => {
       {
         title: '项目编号',
         key: 'project_code',
-        sortable: true,
         type: 'text',
         search: { show: true },
-        width: 120
+        width: 120,
+        form: {
+          disabled: true
+        }
       },
       {
         title: '项目名称',
         key: 'project_name',
-        type: 'text'
+        search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
+        form:{
+          component:{
+            value:null,
+          }
+        }
       },
       {
         title: '合同编号',
         key: 'contract_code',
+        width: 100,
         search: { show: true },
-        type: 'text'
+        type: 'select',
+        dict: {
+          url: '/dicts/getSaleList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "contract.sale/getSaleList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].contract_code,label:projectList[i].contract_code})
+              }
+              return arr
+            })
+          }
+        },
+        form:{
+          component:{
+            value:null,
+          }
+        }
       },
       // {
       //   title: '合同类型',
@@ -133,7 +179,16 @@ export const crudOptions = (vm) => {
       {
         title: '备注',
         key: 'remark',
-        type: 'textarea'
+        width: 500,
+        type: 'text-area',
+        viewForm: {
+          component: {
+            name: null,
+            render (h, scope) {
+              return <div>{scope.value}</div>
+            }
+          }
+        }
       }
     ]
   }
