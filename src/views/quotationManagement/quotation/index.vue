@@ -90,7 +90,7 @@ export default {
       return api.DelObj(row.id)
     },
     getProductDetail({ index, row }, done){
-      this.offer_guid = row.offer_guid;
+      this.offer_guid = row.id;
       this.productDetail = row;
       // return crudOptions(this)
       this.dialogShow = true;
@@ -100,7 +100,7 @@ export default {
     },
     getRecordCommunication({index, row }, done){
       console.log(index,7777,row)
-      this.offer_guid = row.offer_guid;
+      this.offer_guid = row.id;
       this.commShow = true;
       this.$nextTick(()=>{
         this.$refs.comm.communicationDialog = true;

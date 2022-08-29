@@ -1,3 +1,4 @@
+import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
@@ -24,19 +25,20 @@ export const crudOptions = (vm) => {
       //   // search: { show: true },
       //   sortable: true
       // },
-      {
-        title: '项目编号',
-        key: 'project_code',
-        type: 'text',
-        search: { show: true },
-        width: 120,
-        form: {
-          disabled: true
-        }
-      },
+      // {
+      //   title: '项目编号',
+      //   key: 'project_code',
+      //   type: 'text',
+      //   search: { show: true },
+      //   width: 120,
+      //   form: {
+      //     disabled: true
+      //   }
+      // },
       {
         title: '项目名称',
-        key: 'project_name',
+        key: 'project_code',
+        width: 150,
         search: { show: true },
         type: 'select',
         dict: {
@@ -56,8 +58,14 @@ export const crudOptions = (vm) => {
           }
         },
         form:{
+          rules:[
+            {
+              required: true,
+              message:"请选择项目"
+            }
+          ],
           component:{
-            value:null,
+            value: null,
           }
         }
       },
@@ -84,6 +92,12 @@ export const crudOptions = (vm) => {
           }
         },
         form:{
+          rules:[
+            {
+              required: true,
+              message:"请选择合同编号"
+            }
+          ],
           component:{
             value:null,
           }

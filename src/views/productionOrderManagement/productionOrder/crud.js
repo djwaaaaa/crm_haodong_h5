@@ -46,11 +46,50 @@ export const crudOptions = (vm) => {
         }
       },
       {
+        title: '项目名称',
+        key: 'project_code',
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: "", label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
+        form: {
+          rules: [
+            {
+              required: true,
+              message: '请选择项目'
+            }
+          ],
+          editDisabled: true
+        }
+      },
+      {
         title: '订单编号',
         key: 'order_code',
         sortable: true,
         type: 'text',
         width: 100,
+        form: {
+          rules: [
+            {
+              required: true,
+              message: '请填写订单编号'
+            }
+          ],
+          editDisabled: true
+        }
       },
       {
         title: '订单名称',
@@ -116,36 +155,6 @@ export const crudOptions = (vm) => {
         key: 'customer_company',
         type: 'text',
         search: { show: true },
-      },
-      {
-        title: '项目编号',
-        key: 'project_code',
-        search: { show: true },
-        form:{
-          disabled:true
-        },
-        type: 'text',
-      },
-      {
-        title: '项目名称',
-        key: 'project_name',
-        type: 'select',
-        dict: {
-          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
-          getData (url, dict) { // 覆盖全局获取字典请求配置
-            return request({
-              url: "project/getProjectList",
-              method: 'post'
-            }).then(ret => {
-              let projectList = ret.data;
-              let arr = [{ value: "", label: '请选择'}];
-              for (let i = 0; i < projectList.length; i++) {
-                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
-              }
-              return arr
-            })
-          }
-        },
       },
       {
         title: '合计',

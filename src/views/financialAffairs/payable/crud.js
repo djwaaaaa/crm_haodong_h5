@@ -1,3 +1,4 @@
+import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
@@ -22,32 +23,84 @@ export const crudOptions = (vm) => {
       //   width: 60,
       //   sortable: true
       // },
-      {
-        title: '项目编号',
-        key: 'project_code',
-        sortable: true,
-        type: 'text',
-        search: { show: true },
-        width: 120,
-        form: {
-          disabled: true
-        }
-      },
+      // {
+      //   title: '项目编号',
+      //   key: 'project_code',
+      //   sortable: true,
+      //   type: 'text',
+      //   search: { show: true },
+      //   width: 120,
+      //   form: {
+      //     disabled: true
+      //   }
+      // },
       {
         title: '项目名称',
-        key: 'project_name',
-        type: 'text',
-        form: {
-          disabled: true
+        key: 'project_code',
+        width: 150,
+        search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
+        form:{
+          rules:[
+            {
+              required: true,
+              message:"请选择项目"
+            }
+          ],
+          component:{
+            value: null,
+          }
         }
       },
       {
         title: '合同编号',
         key: 'contract_code',
+        width: 100,
         search: { show: true },
-        sortable: true,
-        type: 'text',
-        width: 100
+        type: 'select',
+        dict: {
+          url: '/dicts/getPurchaseList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "contract.purchase/getPurchaseList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].purchase_code,label:projectList[i].purchase_code})
+              }
+              return arr
+            })
+          }
+        },
+        form:{
+          rules:[
+            {
+              required: true,
+              message:"请选择合同编号"
+            }
+          ],
+          component:{
+            value:null,
+          }
+        }
       },
       {
         title: '付款方式',
