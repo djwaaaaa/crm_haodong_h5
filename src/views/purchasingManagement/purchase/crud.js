@@ -45,12 +45,32 @@ export const crudOptions = (vm) => {
         }
       },
       {
-        title: '项目编号',
+        title: '所属项目',
         key: 'project_code',
-        type: 'text',
-        form:{
-          disabled:true
-        }
+        width: 200,
+        search: { show: true },
+        type: 'select',
+        dict: {
+          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
+          getData (url, dict) { // 覆盖全局获取字典请求配置
+            return request({
+              url: "project/getProjectList",
+              method: 'post'
+            }).then(ret => {
+              let projectList = ret.data;
+              let arr = [{ value: null, label: '请选择'}];
+              for (let i = 0; i < projectList.length; i++) {
+                arr.push({value:projectList[i].project_code,label:projectList[i].project_name})
+              }
+              return arr
+            })
+          }
+        },
+        // form: {
+        //   component:{
+        //     value:null,
+        //   }
+        // }
       },
       {
         title: '销售合同编号',

@@ -220,6 +220,7 @@
           // }
         ],
         row: {
+          "id": 0,
           "contract_code": "",
           "company": "",
           "company_name": "",
@@ -271,7 +272,7 @@
           url: 'contract.sale_product/index',
           method: 'post',
           data: {
-            sale_id: this.row.contract_code
+            sale_id: this.row.id
           }
         }).then(ret => {
           let res = ret.data;
@@ -292,6 +293,10 @@
             delete res[key].update_time;
             delete res[key].delete_time
           }
+          if (_this.row.total_price != _this.amount){
+            _this.row.total_price = _this.amount;
+            _this.changeEdmit();
+          }
           _this.contractArr = res;
         })
       },
@@ -308,7 +313,7 @@
             url: 'contract.sale_product/add',
             method: 'post',
             data: {
-              sale_id: this.row.contract_code,
+              sale_id: this.row.id,
               // contract_code: this.row.contract_code
             }
           }).then(ret => {
@@ -336,7 +341,7 @@
       },
       edmit(info) {
         let _this = this;
-        info.sale_id = this.$route.query.offerGuid;
+        info.sale_id = this.row.id;
         return request({
           url: 'contract.sale_product/edit',
           method: 'post',
@@ -433,7 +438,18 @@
     },
     mounted() {
       if (!this.$route.query.add) {
-        this.row = JSON.parse(this.$route.query.info);
+        var info = JSON.parse(this.$route.query.info);
+        request({
+          url: 'contract.sale/detail',
+          method: 'post',
+          data: info
+        }).then(ret => {
+          this.row = ret.data
+          if('' != this.row.contract_code){
+            this.contractCodeDisabled = true;
+          }
+          this.getList();
+        })
         if(this.row.contract_code){
           this.getList();
         }

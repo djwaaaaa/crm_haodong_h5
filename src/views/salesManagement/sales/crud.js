@@ -44,17 +44,18 @@ export const crudOptions = (vm) => {
           disabled:true
         }
       },
-      {
-        title: '项目编号',
-        key: 'project_code',
-        type: 'text',
-        form:{
-          disabled:true
-        }
-      },
+      // {
+      //   title: '项目编号',
+      //   key: 'project_code',
+      //   type: 'text',
+      //   form:{
+      //     disabled:true
+      //   }
+      // },
       {
         title: '所属项目',
-        key: 'project_name',
+        key: 'project_code',
+        width: 200,
         search: { show: true },
         type: 'select',
         dict: {
@@ -267,17 +268,17 @@ export const crudOptions = (vm) => {
         key: 'advance_payment_rate',
         type: 'text',
       },
-      {
-        title: '是否开票',
-        key: 'invoice_flag',
-        type: 'select',
-        dict: {
-          data: [
-            { value: 1, label: '是' },
-            { value: 2, label: '否' }
-          ]
-        }
-      },
+      // {
+      //   title: '是否开票',
+      //   key: 'invoice_flag',
+      //   type: 'select',
+      //   dict: {
+      //     data: [
+      //       { value: 1, label: '是' },
+      //       { value: 2, label: '否' }
+      //     ]
+      //   }
+      // },
       {
         title: '合同说明',
         key: 'contract_description',

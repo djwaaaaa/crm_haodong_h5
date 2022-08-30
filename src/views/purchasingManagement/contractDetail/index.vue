@@ -10,11 +10,11 @@
           </th>
         </tr>
         <tr>
-          <td colspan="2" class="g tr">项目名称：</td>
+          <td colspan="2" class="g tr">所属销售合同：</td>
           <td colspan="10">
-            <el-select v-model="row.contract_code" placeholder="请选择项目" popper-class="project" class="project">
-              <el-option v-for="(item,index) in projectList" :key="index" :label="item.project_name"
-                :value="item.contract_code" @click.native="selectProject(item.project_name,item.project_code)">
+            <el-select v-model="row.contract_code" placeholder="请选择销售合同编号" popper-class="project" class="project">
+              <el-option v-for="(item,index) in projectList" :key="index" :label="item.contract_code"
+                :value="item.contract_code" @click.native="selectProject(item.contract_code,item.project_code)">
               </el-option>
             </el-select>
           </td>
@@ -65,9 +65,9 @@
         <tr>
           <td colspan="19">合计(元)：¥{{amount}}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td colspan="19">合计人民币金额（大写）：{{amount}}</td>
-        </tr>
+        </tr> -->
         <tr>
           <td colspan="19" class="g">合同说明：</td>
         </tr>
@@ -179,6 +179,7 @@
           // }
         ],
         row: {
+          "id": 0,
           "contract_code": "",
           "company": "",
           "company_name": "",
@@ -229,14 +230,14 @@
           url: 'contract.purchase_product/index',
           method: 'post',
           data: {
-            purchase_id: this.row.purchase_code
+            purchase_id: this.row.id
           }
         }).then(ret => {
           let res = ret.data;
           _this.amount = 0;
           _this.total = 0;
           for (const key in res) {
-            _this.amount = _this.amount + (res[key].tax_total_price - 0);
+            _this.amount = _this.amount + (res[key].total_price - 0);
             _this.total = _this.total + (res[key].count - 0);
             delete res[key].matter_code;
             delete res[key].specs_x;
@@ -251,6 +252,10 @@
             delete res[key].create_time;
             delete res[key].update_time;
             delete res[key].delete_time
+          }
+          if (_this.row.total_price != _this.amount){
+            _this.row.total_price = _this.amount;
+            _this.changeEdmit();
           }
           _this.contractArr = res;
         })
@@ -269,7 +274,7 @@
             method: 'post',
             data: {
               purchase_code: this.row.purchase_code,
-              purchase_id: this.row.purchase_code
+              purchase_id: this.row.id
             }
           }).then(ret => {
             this.getList();
@@ -296,7 +301,7 @@
       },
       edmit(info) {
         let _this = this;
-        info.sale_id = this.$route.query.offerGuid;
+        info.purchase_id = this.row.id;
         return request({
           url: 'contract.purchase_product/edit',
           method: 'post',
@@ -311,10 +316,10 @@
       },
       contractEdit(name,code){
         if(name){
-         this.row.project_name = name;
+         this.row.contract_code = name;
         }
         if(code){
-          this.row.project_code = code;
+          this.row.contract_code = code;
         }
         return request({
           url: 'contract.purchase/edit',
@@ -389,10 +394,18 @@
     },
     mounted() {
       if (!this.$route.query.add) {
-        this.row = JSON.parse(this.$route.query.info);
-        if(this.row.contract_code){
+        var info = JSON.parse(this.$route.query.info)
+        request({
+          url: 'contract.purchase/detail',
+          method: 'post',
+          data: info
+        }).then(ret => {
+          this.row = ret.data
+          if('' != this.row.contract_code){
+            this.contractCodeDisabled = true;
+          }
           this.getList();
-        }
+        })
         this.enterStatus = false;
         this.contractStatus = "edit";
       }
