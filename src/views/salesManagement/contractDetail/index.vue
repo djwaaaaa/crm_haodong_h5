@@ -21,9 +21,9 @@
           </td>
           <td colspan="2" class="g tr">合同编号：</td>
           <td colspan="5">
-            <el-input type="text" name="" id="" v-model="row.contract_code" @change="changeEdmit"
-              :disabled="enterStatus" v-if="!row.contract_code"></el-input>
-            <div v-if="row.contract_code" class="code">{{row.contract_code}}</div>
+            <el-input type="text" v-model="row.contract_code" @change="changeEdmit" @blur="changeContractCode"
+              :disabled="enterStatus || contractCodeDisabled"></el-input>
+            <!-- <div v-if="row.contract_code" class="code">{{row.contract_code}}</div> -->
           </td>
         </tr>
 
@@ -257,7 +257,8 @@
         amount: null,
         total: null,
         enterStatus: true,
-        contractStatus:"add"
+        contractStatus:"add",
+        contractCodeDisabled:false,
       }
     },
     created() {
@@ -307,8 +308,8 @@
             url: 'contract.sale_product/add',
             method: 'post',
             data: {
-              sale_id: this.$route.query.offerGuid,
-              contract_code: this.row.contract_code
+              sale_id: this.row.contract_code,
+              // contract_code: this.row.contract_code
             }
           }).then(ret => {
             this.getList();
@@ -392,11 +393,15 @@
       },
       changeEdmit() {
         let _this = this;
-        console.log(this.contractStatus,77777)
         if (this.contractStatus == "edit") {
           this.contractEdit();
         } else if(this.contractStatus == "add") {
           this.contractAdd();
+        }
+      },
+      changeContractCode(){
+        if(this.row.contract_code){
+          this.contractCodeDisabled = true;
         }
       },
       close() {
