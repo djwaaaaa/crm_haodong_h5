@@ -42,6 +42,14 @@ export const crudOptions = (vm) => {
         }
       },
       {
+        title: '项目编号',
+        key: 'project_code',
+        type: 'text',
+        form:{
+          disabled:true
+        }
+      },
+      {
         title: '销售合同编号',
         key: 'contract_code',
         width: 100,
@@ -157,14 +165,7 @@ export const crudOptions = (vm) => {
           }
         },
       },
-      {
-        title: '项目编号',
-        key: 'project_code',
-        type: 'text',
-        form:{
-          disabled:true
-        }
-      },
+      
     ]
   }
 }
