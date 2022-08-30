@@ -31,25 +31,39 @@ export const crudOptions = (vm) => {
         form: { disabled: true }
       },
       {
-        title: '报价单guid',
-        key: 'offer_guid',
-        sortable: true,
+        title: '报价单id',
+        key: 'offer_id',
+        type: 'text',
+        disabled: true,
         form:{
           component:{
             value:vm.offerGuid,
             readonly: true,
             show: false,
-            on:{ //除input change事件外，更多组件事件监听
-              focus(event){
-                event.props.value="666";
-                console.log(event,9999)
-              } //监听表单组件的select事件
-            },
           }
         },
-        type: 'text',
-        width: 150,
       },
+      // {
+      //   title: '报价单guid',
+      //   key: 'offer_guid',
+      //   sortable: true,
+      //   disabled: true,
+      //   form:{
+      //     component:{
+      //       value:vm.offerGuid,
+      //       readonly: true,
+      //       show: false,
+      //       on:{ //除input change事件外，更多组件事件监听
+      //         focus(event){
+      //           event.props.value="666";
+      //           console.log(event,9999)
+      //         } //监听表单组件的select事件
+      //       },
+      //     }
+      //   },
+      //   type: 'text',
+      //   width: 150,
+      // },
       {
         title: '物料编码',
         key: 'matter_code',

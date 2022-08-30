@@ -24,10 +24,10 @@ export const crudOptions = (vm) => {
       //   sortable: true
       // },
       {
-        title: '报价单guid',
-        key: 'offer_guid',
-        sortable: true,
-        search: { show: true },
+        title: '报价单id',
+        key: 'offer_id',
+        type: 'text',
+        disabled: true,
         form:{
           component:{
             value:vm.offerGuid,
@@ -35,8 +35,22 @@ export const crudOptions = (vm) => {
             show: false,
           }
         },
-        width: 150,
       },
+      // {
+      //   title: '报价单guid',
+      //   key: 'offer_guid',
+      //   sortable: true,
+      //   search: { show: true },
+      //   disabled: true,
+      //   form:{
+      //     component:{
+      //       value:vm.offerGuid,
+      //       readonly: true,
+      //       show: false,
+      //     }
+      //   },
+      //   width: 150,
+      // },
       {
         title: '沟通内容',
         key: 'connect_content',
