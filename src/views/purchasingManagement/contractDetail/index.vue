@@ -5,176 +5,135 @@
         <tr>
           <th colspan="19" class="h">
             <div class="header">
-              <img src="./images/logo.png" alt="">
-              <h1>常州浩东净化承揽加工合同</h1>
+              <h1>{{row.customer_company}}销售合同</h1>
             </div>
           </th>
         </tr>
         <tr>
           <td colspan="2" class="g tr">项目名称：</td>
           <td colspan="10">
-            <el-select v-model="row.project_code" placeholder="请选择项目" popper-class="project" class="project">
+            <el-select v-model="row.contract_code" placeholder="请选择项目" popper-class="project" class="project">
               <el-option v-for="(item,index) in projectList" :key="index" :label="item.project_name"
-                :value="item.project_code" @click.native="selectProject(item.project_name,item.project_code)">
+                :value="item.contract_code" @click.native="selectProject(item.project_name,item.project_code)">
               </el-option>
             </el-select>
           </td>
-          <td colspan="2" class="g tr">合同编号：</td>
-          <td colspan="5">
-            <el-input type="text" name="" id="" v-model="row.contract_code" @change="changeEdmit"
-              :disabled="enterStatus" v-if="!row.contract_code"></el-input>
-            <div v-if="row.contract_code" class="code">{{row.contract_code}}</div>
-          </td>
+          <td colspan="2" class="g tr">签订日期：</td>
+          <td colspan="5"><el-input type="text" v-model="row.sign_date" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
         </tr>
 
         <tr>
           <td colspan="2" class="g tr">供方：</td>
-          <td colspan="10"><el-input type="text" v-model="row.company_name" @change="changeEdmit"
+          <td colspan="17"><el-input type="text" v-model="row.company_name" @change="changeEdmit"
               :disabled="enterStatus" ></el-input></td>
-          <td colspan="2" class="g tr">签订日期：</td>
-          <td colspan="5"><el-input type="text" v-model="row.sign_date" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
         </tr>
         <tr>
           <td colspan="2" class="g tr">需方：</td>
-          <td colspan="10"><el-input type="text" v-model="row.customer_company_name" @change="changeEdmit"
+          <td colspan="17"><el-input type="text" v-model="row.customer_company_name" @change="changeEdmit"
               :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="g tr">交货日期：</td>
-          <td colspan="5"><el-input type="text" v-model="row.delivery_date" @change="changeEdmit" :disabled="enterStatus"></el-input>
-          </td>
         </tr>
         <tr>
-          <th>序号</th>
-          <th>产品名称</th>
-          <th>(客户) 产品名称</th>
-          <th>税码</th>
-          <th>开票产品名称</th>
-          <th>产品图片</th>
-          <th>规格尺寸</th>
-          <th>款式颜色</th>
-          <th>技术参数</th>
-          <th>单位</th>
-          <th>数量</th>
-          <th>不含税单价</th>
-          <th>不含税总价</th>
-          <th>税率</th>
-          <th>税额</th>
-          <th>含税单价</th>
-          <th>含税总价</th>
-          <th>备注</th>
-          <th>
+          <td colspan="12">一、订货内容</td>
+          <td colspan="2" class="g tr">合同编号：</td>
+          <td colspan="5"><el-input type="text" v-model="row.purchase_code" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+        </tr>
+        <tr>
+          <th colspan="2">序号</th>
+          <th colspan="3">产品名称</th>
+          <th colspan="2">单位</th>
+          <th colspan="3">数量</th>
+          <th colspan="2">单价</th>
+          <th colspan="3">总价</th>
+          <th colspan="3">备注</th>
+          <th colspan="1">
             <div class="addProduct" @click="addProduct">新增</div>
           </th>
         </tr>
         <tr v-for="(info,index) in contractArr" :key="index">
-          <td class="g tc">{{index+1}}</td>
-          <td><el-input type="text" v-model="info.product_name" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.customer_product_name" @change="edmit(info)" :disabled="enterStatus"></el-input>
+          <td colspan="2" class="g tc">{{index+1}}</td>
+          <td colspan="3"><el-input type="text" v-model="info.product_name" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
+          <td colspan="2"><el-input type="text" v-model="info.unit" @change="edmit(info)" :disabled="enterStatus"></el-input>
           </td>
-          <td><el-input type="text" v-model="info.tax_code" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.invoice_product_name" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.product_img" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.specs_value" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.color" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.technical_param" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.unit" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.count" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.no_tax_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.no_tax_total_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_rate" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_amount" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_total_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.remark" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
+          <td colspan="3"><el-input type="text" v-model="info.count" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
+          <td colspan="2"><el-input type="text" v-model="info.price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
+          <td colspan="3"><el-input type="text" v-model="info.total_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
+          <td colspan="3" :rowspan="contractArr.length" v-if="index == 0"><el-input type="textarea" v-model="info.remark" @change="edmit(info)" :disabled="enterStatus" :rowspan="contractArr.length"></el-input></td>
           <td>
             <div class="addProduct delete" @click="deleteProduct(info)">删除</div>
           </td>
         </tr>
         <tr>
-          <td colspan="2" class="g tr">金额：</td>
-          <td colspan="13">{{amount}}</td>
-          <td colspan="1" class="g tr">合计：</td>
-          <td colspan="3">{{total}}</td>
+          <td colspan="19">合计(元)：¥{{amount}}</td>
+        </tr>
+        <tr>
+          <td colspan="19">合计人民币金额（大写）：{{amount}}</td>
         </tr>
         <tr>
           <td colspan="19" class="g">合同说明：</td>
         </tr>
         <tr>
           <td colspan="19"> <el-input type="textarea" cols="30" rows="10" @change="changeEdmit"
-              :disabled="enterStatus" v-model="row.contract_description"></el-input></td>
+              :disabled="enterStatus" v-model="row.explain"></el-input></td>
         </tr>
         </tr>
         <tr>
-          <td colspan="10" class="tc">供方信息:</td>
-          <td colspan="9" class="tc">需方信息:</td>
+          <td colspan="10" class="tl">供方(盖章):</td>
+          <td colspan="9" class="tl">需方(盖章):</td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">单位名称(章)∶</td>
+          <td colspan="2" class="tl">单位名称∶</td>
           <td colspan="8"><el-input type="text" v-model="row.company_name" @change="changeEdmit" :disabled="enterStatus"></el-input>
           </td>
-          <td colspan="2" class="tr">单位名称(章)∶</td>
+          <td colspan="2" class="tl">单位名称∶</td>
           <td colspan="7"><el-input type="text" v-model="row.customer_company_name" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">工厂地址:</td>
+          <td colspan="2" class="tl">单位地址:</td>
           <td colspan="8"><el-input type="text" v-model="row.address" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">单位地址∶</td>
+          <td colspan="2" class="tl">单位地址∶</td>
           <td colspan="7"><el-input type="text" v-model="row.customer_address" @change="changeEdmit"
               :disabled="enterStatus"></el-input></td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">法定代表人:</td>
-          <td colspan="8"><el-input type="text" v-model="row.legal_representative" @change="changeEdmit"
-              :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">法定代表人:</td>
-          <td colspan="7"><el-input type="text" v-model="row.customer_legal_representative" @change="changeEdmit"
-              :disabled="enterStatus" ></el-input></td>
-        </tr>
-        <tr>
-          <td colspan="2" class="tr">委托代理人(签章):</td>
-          <td colspan="8"><el-input type="text" v-model="row.agent" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">委托代理人(签章):</td>
-          <td colspan="7"><el-input type="text" v-model="row.customer_agent" @change="changeEdmit" :disabled="enterStatus"></el-input>
+          <td colspan="2" class="tl">委托代理人(签章):</td>
+          <td colspan="8"><el-input type="text" v-model="row.contacts" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+          <td colspan="2" class="tl">委托代理人(签章):</td>
+          <td colspan="7"><el-input type="text" v-model="row.customer_contacts" @change="changeEdmit" :disabled="enterStatus"></el-input>
           </td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">手机:</td>
+          <td colspan="2" class="tl">电话:</td>
           <td colspan="8"><el-input type="text" v-model="row.phone" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">手机:</td>
+          <td colspan="2" class="tl">电话:</td>
           <td colspan="7"><el-input type="text" v-model="row.customer_phone" @change="changeEdmit" :disabled="enterStatus"></el-input>
           </td>
         </tr>
+
         <tr>
-          <td colspan="2" class="tr">电话:</td>
-          <td colspan="8"><el-input type="text" v-model="row.telephone" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">电话:</td>
-          <td colspan="7"><el-input type="text" v-model="row.customer_telephone" @change="changeEdmit"
-              :disabled="enterStatus"></el-input></td>
-        </tr>
-        <tr>
-          <td colspan="2" class="tr">传真:</td>
+          <td colspan="2" class="tl">传真:</td>
           <td colspan="8"><el-input type="text" v-model="row.fax" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">传真:</td>
+          <td colspan="2" class="tl">传真:</td>
           <td colspan="7"><el-input type="text" v-model="row.customer_fax" @change="changeEdmit" :disabled="enterStatus"></el-input>
           </td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">电邮:</td>
-          <td colspan="8"><el-input type="text" v-model="row.email" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">电邮:</td>
-          <td colspan="7"><el-input type="text" v-model="row.customer_email" @change="changeEdmit" :disabled="enterStatus"></el-input>
+          <td colspan="2" class="tl">开户名称:</td>
+          <td colspan="8"><el-input type="text" v-model="row.account_name" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+          <td colspan="2" class="tl">开户名称:</td>
+          <td colspan="7"><el-input type="text" v-model="row.customer_account_name" @change="changeEdmit" :disabled="enterStatus"></el-input>
           </td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">开户银行:</td>
-          <td colspan="8"><el-input type="text" v-model="row.bank" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">开户银行:</td>
+          <td colspan="2" class="tl">开户银行:</td>
+          <td colspan="8"><el-input type="text" v-model="row.bank_name" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+          <td colspan="2" class="tl">开户银行:</td>
           <td colspan="7"><el-input type="text" v-model="row.customer_bank" @change="changeEdmit" :disabled="enterStatus"></el-input>
           </td>
         </tr>
         <tr>
-          <td colspan="2" class="tr">帐号:</td>
+          <td colspan="2" class="tl">货款账号:</td>
           <td colspan="8"><el-input type="text" v-model="row.account" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
-          <td colspan="2" class="tr">帐号:</td>
+          <td colspan="2" class="tl">货款账号:</td>
           <td colspan="7"><el-input type="text" v-model="row.customer_account" @change="changeEdmit"
               :disabled="enterStatus"></el-input></td>
         </tr>
@@ -267,10 +226,10 @@
       getList() {
         let _this = this;
         return request({
-          url: 'contract.sale_product/index',
+          url: 'contract.purchase_product/index',
           method: 'post',
           data: {
-            sale_id: this.row.contract_code
+            purchase_id: this.row.purchase_code
           }
         }).then(ret => {
           let res = ret.data;
@@ -284,9 +243,11 @@
             delete res[key].specs_y;
             delete res[key].specs_z;
             delete res[key].specs_type;
+            delete res[key].specs_value;
             delete res[key].product_draw;
             delete res[key].explain;
             delete res[key].requirementl;
+            delete res[key].color;
             delete res[key].create_time;
             delete res[key].update_time;
             delete res[key].delete_time
@@ -297,18 +258,18 @@
       addProduct() {
         let _this = this;
         console.log(this.$route.query.offerGuid, this.row.contract_code)
-        if(!this.row.contract_code){
+        if(!this.row.purchase_code){
           this.$message({
             message: "请先输入合同编号",
             type: 'error'
           });
         }else{
           return request({
-            url: 'contract.sale_product/add',
+            url: 'contract.purchase_product/add',
             method: 'post',
             data: {
-              sale_id: this.$route.query.offerGuid,
-              contract_code: this.row.contract_code
+              purchase_code: this.row.purchase_code,
+              purchase_id: this.row.purchase_code
             }
           }).then(ret => {
             this.getList();
@@ -322,7 +283,7 @@
       deleteProduct(info) {
         let _this = this;
         return request({
-          url: 'contract.sale_product/delete',
+          url: 'contract.purchase_product/delete',
           method: 'post',
           data: info
         }).then(ret => {
@@ -337,7 +298,7 @@
         let _this = this;
         info.sale_id = this.$route.query.offerGuid;
         return request({
-          url: 'contract.sale_product/edit',
+          url: 'contract.purchase_product/edit',
           method: 'post',
           data: info
         }).then(ret => {
@@ -356,7 +317,7 @@
           this.row.project_code = code;
         }
         return request({
-          url: 'contract.sale/edit',
+          url: 'contract.purchase/edit',
           method: 'post',
           data: this.row
         }).then(ret => {
@@ -368,7 +329,7 @@
       },
       contractAdd(name,code){
         return request({
-          url: 'contract.sale/add',
+          url: 'contract.purchase/add',
           method: 'post',
           data: this.row
         }).then(ret => {
@@ -403,18 +364,18 @@
         this.productDialog = false;
         this.$emit("closeProductDetail");
       },
-      //项目列表
+      //销售合同
       getProjectList(kw) {
         let _this = this;
         return request({
-          url: 'project/getProjectList',
+          url: 'contract.sale/getSaleList',
           method: 'post',
           data: {
             kw: kw
           }
         }).then(ret => {
           this.projectList = ret.data;
-          console.log("项目列表", ret.data)
+          console.log("销售合同", ret.data)
         })
       },
       selectProject(data, index) {
@@ -470,7 +431,7 @@
       td {
         position: relative;
         min-height: 32px;
-
+        height: 40px;
         &.tc {
           text-align: center;
           padding: 5px 0;

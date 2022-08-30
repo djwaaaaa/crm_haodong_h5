@@ -56,11 +56,9 @@ export default {
       return api.GetList(query)
     },
     addRequest (row) {
-      console.log('api', api)
       return api.AddObj(row)
     },
     updateRequest (row) {
-      console.log('----', row)
       return api.UpdateObj(row)
     },
     delRequest (row) {
@@ -69,7 +67,6 @@ export default {
     getComparisonCheck({ index, row }, done){
       this.checkShow=true;
       this.project_code = row.project_code;
-      console.log(row,1000)
       this.$nextTick(()=>{
         this.$refs.check.checkDialog = true;
       })
@@ -80,17 +77,24 @@ export default {
     getProductDetail({ index, row }, done){
       console.log(row,999)
       this.purchase_id = row.purchase_code;
-      this.dialogShow = true;
-      this.$nextTick(()=>{
-        this.$refs.dialog.productDialog = true;
-      })
+      this.$router.push({
+        path: '/purchasingManagement/contractDetail',
+        query: {
+          purchaseCode: row.contract_code,
+          info:JSON.stringify(row)
+        }
+      });
+      // this.dialogShow = true;
+      // this.$nextTick(()=>{
+      //   this.$refs.dialog.productDialog = true;
+      // })
     },
     closeProductDetail(){
       this.dialogShow=false;
     },
     addSalesContract(){
       this.$router.push({
-        path: '/salesManagement/contractDetail',
+        path: '/purchasingManagement/contractDetail',
         query: {
           add: 1,
         }

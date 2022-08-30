@@ -3,7 +3,7 @@ export const crudOptions = (vm) => {
   return {
     rowHandle: {
       fixed: 'right', // 右边固定列
-      width: 440,
+      width: 360,
       custom: [
         {
           text: '产品明细',
@@ -18,6 +18,9 @@ export const crudOptions = (vm) => {
           emit: 'comparison',
         },
       ],
+      edit:{
+        show:false
+      }
     },
     pageOptions: {
       compact: false
@@ -133,21 +136,7 @@ export const crudOptions = (vm) => {
         key: 'account_name',
         type: 'text',
       },
-      {
-        title: '合同说明',
-        key: 'explain',
-        width: 500,
-        type: 'text-area',
-        viewForm: {
-          component: {
-            name: null,
-            render (h, scope) {
-              // console.log(scope.9666)
-              return <div>{scope.value}</div>
-            }
-          }
-        }
-      },
+
       {
         title: '采购状态',
         key: 'status',
@@ -165,7 +154,76 @@ export const crudOptions = (vm) => {
           }
         },
       },
-      
+      {
+        title: '供方单位名称',
+        key: 'company_name',
+        type: 'text',
+      },
+      {
+        title: '供方传真',
+        key: 'fax',
+        type: 'text',
+      },
+      {
+        title: '需方公司名称',
+        key: 'customer_company',
+        type: 'text',
+      },
+      {
+        title: '需方单位名称',
+        key: 'customer_company_name',
+        type: 'text',
+      },
+      {
+        title: '需方单位地址',
+        key: 'customer_address',
+        type: 'text',
+      },
+      {
+        title: '需方委托代理人',
+        key: 'customer_contacts',
+        type: 'text',
+      },
+      {
+        title: '需方电话',
+        key: 'customer_phone',
+        type: 'text',
+      },
+      {
+        title: '需方传真',
+        key: 'customer_fax',
+        type: 'text',
+      },
+      {
+        title: '需方货款账号',
+        key: 'customer_account',
+        type: 'text',
+      },
+      {
+        title: '开户行',
+        key: 'customer_bank',
+        type: 'text',
+      },
+      {
+        title: '需方开户名称',
+        key: 'customer_account_name',
+        type: 'text',
+      },
+      {
+        title: '合同说明',
+        key: 'explain',
+        width: 500,
+        type: 'text-area',
+        viewForm: {
+          component: {
+            name: null,
+            render (h, scope) {
+              // console.log(scope.9666)
+              return <div>{scope.value}</div>
+            }
+          }
+        }
+      },
     ]
   }
 }
