@@ -33,6 +33,7 @@ import { crudOptions } from './crud'
 import { d2CrudPlus } from 'd2-crud-plus'
 import productDetail from './components/productDetail'
 import comparisonCheck from '../../comparisonCheck'
+import { request } from '@/api/service'
 export default {
   name: 'formSelect',
   mixins: [d2CrudPlus.crud],
@@ -74,6 +75,12 @@ export default {
     closeDialog(){
       this.checkShow=false;
     },
+    addPurchaseContract(){
+      return request({
+        url: 'contract.purchase/add',
+        method: 'post',
+      })
+    },
     getProductDetail({ index, row }, done){
       console.log(row,999)
       this.purchase_id = row.purchase_code;
@@ -81,7 +88,7 @@ export default {
         path: '/purchasingManagement/contractDetail',
         query: {
           purchaseCode: row.contract_code,
-          info:JSON.stringify(row)
+          id:row.id
         }
       });
       // this.dialogShow = true;
@@ -93,12 +100,17 @@ export default {
       this.dialogShow=false;
     },
     addSalesContract(){
-      this.$router.push({
-        path: '/purchasingManagement/contractDetail',
-        query: {
-          add: 1,
-        }
-      });
+      return request({
+        url: 'contract.purchase/add',
+        method: 'post',
+      }).then(ret => {
+        this.$router.push({
+          path: '/purchasingManagement/contractDetail',
+          query: {
+            id:ret.data.id
+          }
+        });
+      })
     },
   }
 }
