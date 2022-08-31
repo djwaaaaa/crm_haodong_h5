@@ -188,7 +188,7 @@
     request
   } from '@/api/service'
   export default {
-    name: 'productDetail',
+    name: 'salesManagement-contractDetail',
     data() {
       return {
         projectList: [],
@@ -272,7 +272,7 @@
           url: 'contract.sale_product/index',
           method: 'post',
           data: {
-            sale_id: this.row.id
+            sale_id: this.row.contract_code
           }
         }).then(ret => {
           let res = ret.data;
@@ -313,7 +313,7 @@
             url: 'contract.sale_product/add',
             method: 'post',
             data: {
-              sale_id: this.row.id,
+              sale_id: this.row.contract_code,
               // contract_code: this.row.contract_code
             }
           }).then(ret => {
@@ -437,19 +437,8 @@
       }
     },
     mounted() {
-      if (!this.$route.query.add) {
-        var info = JSON.parse(this.$route.query.info);
-        request({
-          url: 'contract.sale/detail',
-          method: 'post',
-          data: info
-        }).then(ret => {
-          this.row = ret.data
-          if('' != this.row.contract_code){
-            this.contractCodeDisabled = true;
-          }
-          this.getList();
-        })
+     if (!this.$route.query.add) {
+        this.row = JSON.parse(this.$route.query.info);
         if(this.row.contract_code){
           this.getList();
         }

@@ -137,7 +137,7 @@ const frameIn = [
     component: layoutHeaderAside,
     children: [
       { path: 'purchase', name: 'purchasingManagement-purchase', component: _import('purchasingManagement/purchase'), meta: { ...meta, title: '采购管理' } },
-      { path: 'contractDetail', name: 'purchasingManagement-contractDetail', component: _import('purchasingManagement/contractDetail'), meta: { ...meta, title: '采购合同' } },
+      { path: 'contractDetail', name: 'purchasingManagement-contractDetail', component: _import('purchasingManagement/contractDetail'), meta: { ...meta,cache: true, title: '采购合同' } },
     ]
   },
   {
@@ -148,7 +148,7 @@ const frameIn = [
     component: layoutHeaderAside,
     children: [
       { path: 'sales', name: 'salesManagement-sales', component: _import('salesManagement/sales'), meta: { ...meta, title: '销售管理',cache:false  } },
-      { path: 'contractDetail', name: 'salesManagement-contractDetail', component: _import('salesManagement/contractDetail'), meta: { ...meta, title: '销售合同' } },
+      { path: 'contractDetail', name: 'salesManagement-contractDetail', component: _import('salesManagement/contractDetail'), meta: { ...meta,cache: true, title: '销售合同' } },
     ]
   },
   {

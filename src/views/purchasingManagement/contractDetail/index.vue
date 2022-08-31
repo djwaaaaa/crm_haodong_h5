@@ -19,7 +19,18 @@
             </el-select>
           </td>
           <td colspan="2" class="g tr">签订日期：</td>
-          <td colspan="5"><el-input type="text" v-model="row.sign_date" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+          <td colspan="5">
+            <el-date-picker
+                  v-model="row.sign_date"
+                  type="date"
+                  placeholder="选择日期"
+                  value-format="yyyy-MM-dd HH-mm-ss"
+                  :disabled="enterStatus"
+                  @change="changeEdmit"
+                  >
+                </el-date-picker>
+            <!-- <el-input type="text" v-model="row.sign_date" @change="changeEdmit" :disabled="enterStatus"></el-input> -->
+          </td>
         </tr>
 
         <tr>
@@ -147,7 +158,7 @@
     request
   } from '@/api/service'
   export default {
-    name: 'productDetail',
+    name: 'purchasingManagement-contractDetail',
     data() {
       return {
         projectList: [],
@@ -217,7 +228,8 @@
         amount: null,
         total: null,
         enterStatus: true,
-        contractStatus:"add"
+        contractStatus:"add",
+        addId:null,
       }
     },
     created() {
@@ -230,7 +242,7 @@
           url: 'contract.purchase_product/index',
           method: 'post',
           data: {
-            purchase_id: this.row.id
+            purchase_id: this.row.purchase_code
           }
         }).then(ret => {
           let res = ret.data;
@@ -274,7 +286,7 @@
             method: 'post',
             data: {
               purchase_code: this.row.purchase_code,
-              purchase_id: this.row.id
+              purchase_id: this.row.purchase_code
             }
           }).then(ret => {
             this.getList();
@@ -339,6 +351,7 @@
           data: this.row
         }).then(ret => {
           this.row = ret.data;
+          this.addId = ret.data.id;
           this.enterStatus = false;
           this.contractStatus = "edit"
           this.$message({
@@ -394,18 +407,10 @@
     },
     mounted() {
       if (!this.$route.query.add) {
-        var info = JSON.parse(this.$route.query.info)
-        request({
-          url: 'contract.purchase/detail',
-          method: 'post',
-          data: info
-        }).then(ret => {
-          this.row = ret.data
-          if('' != this.row.contract_code){
-            this.contractCodeDisabled = true;
-          }
+        this.row = JSON.parse(this.$route.query.info);
+        if(this.row.contract_code){
           this.getList();
-        })
+        }
         this.enterStatus = false;
         this.contractStatus = "edit";
       }
