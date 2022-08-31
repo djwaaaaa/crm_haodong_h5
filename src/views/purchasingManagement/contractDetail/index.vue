@@ -24,7 +24,7 @@
                   v-model="row.sign_date"
                   type="date"
                   placeholder="选择日期"
-                  value-format="yyyy-MM-dd HH-mm-ss"
+                  value-format="yyyy-MM-dd"
                   :disabled="enterStatus"
                   @change="changeEdmit"
                   >
@@ -242,7 +242,7 @@
           url: 'contract.purchase_product/index',
           method: 'post',
           data: {
-            purchase_id: this.row.purchase_code
+            purchase_id: this.row.id
           }
         }).then(ret => {
           let res = ret.data;
@@ -286,7 +286,7 @@
             method: 'post',
             data: {
               purchase_code: this.row.purchase_code,
-              purchase_id: this.row.purchase_code
+              purchase_id: this.row.id
             }
           }).then(ret => {
             this.getList();

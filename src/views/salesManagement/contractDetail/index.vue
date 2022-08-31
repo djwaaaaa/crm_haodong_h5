@@ -32,14 +32,35 @@
           <td colspan="10"><el-input type="text" v-model="row.company_name" @change="changeEdmit"
               :disabled="enterStatus" ></el-input></td>
           <td colspan="2" class="g tr">签订日期：</td>
-          <td colspan="5"><el-input type="text" v-model="row.sign_date" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+          <td colspan="5">
+            <!-- <el-input type="text" v-model="row.sign_date" @change="changeEdmit" :disabled="enterStatus"></el-input> -->
+            <el-date-picker
+                  v-model="row.sign_date"
+                  type="date"
+                  placeholder="选择日期"
+                  value-format="yyyy-MM-dd"
+                  :disabled="enterStatus"
+                  @change="changeEdmit"
+                  >
+            </el-date-picker>
+          </td>
         </tr>
         <tr>
           <td colspan="2" class="g tr">需方：</td>
           <td colspan="10"><el-input type="text" v-model="row.customer_company_name" @change="changeEdmit"
               :disabled="enterStatus"></el-input></td>
           <td colspan="2" class="g tr">交货日期：</td>
-          <td colspan="5"><el-input type="text" v-model="row.delivery_date" @change="changeEdmit" :disabled="enterStatus"></el-input>
+          <td colspan="5">
+            <!-- <el-input type="text" v-model="row.delivery_date" @change="changeEdmit" :disabled="enterStatus"></el-input> -->
+            <el-date-picker
+                  v-model="row.delivery_date"
+                  type="date"
+                  placeholder="选择日期"
+                  value-format="yyyy-MM-dd"
+                  :disabled="enterStatus"
+                  @change="changeEdmit"
+                  >
+            </el-date-picker>
           </td>
         </tr>
         <tr>
@@ -272,7 +293,7 @@
           url: 'contract.sale_product/index',
           method: 'post',
           data: {
-            sale_id: this.row.contract_code
+            sale_id: this.row.id
           }
         }).then(ret => {
           let res = ret.data;
@@ -313,7 +334,7 @@
             url: 'contract.sale_product/add',
             method: 'post',
             data: {
-              sale_id: this.row.contract_code,
+              sale_id: this.row.id,
               // contract_code: this.row.contract_code
             }
           }).then(ret => {
