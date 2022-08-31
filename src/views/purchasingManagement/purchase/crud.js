@@ -51,8 +51,8 @@ export const crudOptions = (vm) => {
         search: { show: true },
         type: 'select',
         dict: {
-          url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
-          getData (url, dict) { // 覆盖全局获取字典请求配置
+          url: '/dicts/getProjectList', 
+          getData (url, dict) { 
             return request({
               url: "project/getProjectList",
               method: 'post'

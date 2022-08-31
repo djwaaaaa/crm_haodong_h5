@@ -14,7 +14,7 @@
           <td colspan="10">
             <el-select v-model="row.contract_code" placeholder="请选择销售合同编号" popper-class="project" class="project">
               <el-option v-for="(item,index) in projectList" :key="index" :label="item.contract_code"
-                :value="item.contract_code" @click.native="selectProject(item.contract_code,item.project_code)">
+                :value="item.contract_code" @click.native="selectProject(item.contract_code,item.project_name)">
               </el-option>
             </el-select>
           </td>
@@ -46,7 +46,7 @@
         <tr>
           <td colspan="12">一、订货内容</td>
           <td colspan="2" class="g tr">合同编号：</td>
-          <td colspan="5"><el-input type="text" v-model="row.purchase_code" @change="changeEdmit" :disabled="enterStatus"></el-input></td>
+          <td colspan="5"><el-input type="text" v-model="row.purchase_code" @change="changeEdmit('purchase_code')" :disabled="enterStatus || contractCodeDisabled"></el-input></td>
         </tr>
         <tr>
           <th colspan="2">序号</th>
@@ -165,30 +165,7 @@
         projectName: '',
         productDialog: true,
         order_code: null,
-        contractArr: [
-          // {
-          //             "id":1,
-          //             "sale_id":"3",	// 新增字段
-          //             "contract_code":"111111",
-          //             "product_name":"产品名称",
-          //             "customer_product_name":"客户产品名称",	// 新增字段
-          //             "tax_code":"税码",	// 新增字段
-          //             "invoice_product_name":"开票产品名称",	// 新增字段
-          //             "product_img":"产品图片",	// 新增字段
-          //             "specs_value":"规格",
-          //             "color":"颜色",
-          //             "technical_param":"技术参数",	// 新增字段
-          //             "unit":"单位",
-          //             "count":"数量",
-          //             "no_tax_price":"不含税单价",	// 新增字段
-          //             "no_tax_total_price":"不含税总单价",	// 新增字段
-          //             "tax_rate":"税率",	// 新增字段
-          //             "tax_amount":"税额",	// 新增字段
-          //             "tax_price":"含税单价",	// 新增字段
-          //             "tax_total_price":"含税总价",	// 新增字段
-          //             "remark":"备注",	// 新增字段
-          // }
-        ],
+        contractArr: [],
         row: {
           "id": 0,
           "contract_code": "",
@@ -228,12 +205,10 @@
         amount: null,
         total: null,
         enterStatus: true,
-        contractStatus:"add",
-        addId:null,
+        contractCodeDisabled:false,
       }
     },
     created() {
-      console.log(this.$route.query, 66610)
     },
     methods: {
       getList() {
@@ -274,7 +249,6 @@
       },
       addProduct() {
         let _this = this;
-        console.log(this.$route.query.offerGuid, this.row.contract_code)
         if(!this.row.purchase_code){
           this.$message({
             message: "请先输入合同编号",
@@ -313,7 +287,6 @@
       },
       edmit(info) {
         let _this = this;
-        info.purchase_id = this.row.id;
         return request({
           url: 'contract.purchase_product/edit',
           method: 'post',
@@ -326,57 +299,27 @@
           });
         })
       },
-      contractEdit(name,code){
-        if(name){
-         this.row.contract_code = name;
-        }
-        if(code){
-          this.row.contract_code = code;
-        }
+      contractEdit(code,name){
         return request({
           url: 'contract.purchase/edit',
           method: 'post',
           data: this.row
         }).then(ret => {
+          if(code && name){
+            this.enterStatus = false;
+          }
+          if(code == 'purchase_code'){
+            this.contractCodeDisabled = true;
+          }
           this.$message({
             message: ret.msg,
             type: 'success'
           });
         })
       },
-      contractAdd(name,code){
-        return request({
-          url: 'contract.purchase/add',
-          method: 'post',
-          data: this.row
-        }).then(ret => {
-          this.row = ret.data;
-          this.addId = ret.data.id;
-          this.enterStatus = false;
-          this.contractStatus = "edit"
-          this.$message({
-            message: ret.msg,
-            type: 'success'
-          });
-        }).catch(ret => {
-          this.row.project_code = '';
-          this.enterStatus = true;
-          this.contractStatus = "add"
-          this.$message({
-            message: ret.msg,
-            type: 'error'
-          });
-        })
-        console.log(this.contractStatus,77777111)
-      },
-      changeEdmit() {
+      changeEdmit(purchase_code) {
         let _this = this;
-        console.log(this.contractStatus,77777)
-        if (this.contractStatus == "edit") {
-          this.contractEdit();
-        } else if(this.contractStatus == "add") {
-          this.contractAdd();
-        }
+        this.contractEdit('purchase_code');
       },
       close() {
         this.productDialog = false;
@@ -393,26 +336,37 @@
           }
         }).then(ret => {
           this.projectList = ret.data;
-          console.log("销售合同", ret.data)
         })
       },
-      selectProject(data, index) {
-        if (this.contractStatus == "edit") {
-          this.contractEdit(data, index);
-        } else if(this.contractStatus == "add") {
-          this.contractAdd(data, index);
-        }
-        console.log("选中", data, index)
+      selectProject(code, name) {
+        this.row.contract_code = code;
+        this.row.project_name = name;
+        this.contractEdit(code, name);
+      },
+      getPurchaseContract(id){
+        return request({
+          url: 'contract.purchase/detail',
+          method: 'post',
+          data: {
+            id:id
+          }
+        }).then(ret => {
+          this.row = ret.data;
+          if(this.row.purchase_code){
+            this.getList();
+          }
+          if(this.row.contract_code){
+            this.enterStatus = false;
+          }
+          if(this.row.purchase_code){
+            this.contractCodeDisabled = true;
+          }
+        })
       }
     },
     mounted() {
-      if (!this.$route.query.add) {
-        this.row = JSON.parse(this.$route.query.info);
-        if(this.row.contract_code){
-          this.getList();
-        }
-        this.enterStatus = false;
-        this.contractStatus = "edit";
+      if (this.$route.query.id) {
+        this.getPurchaseContract(this.$route.query.id);
       }
       this.getProjectList();
     },
