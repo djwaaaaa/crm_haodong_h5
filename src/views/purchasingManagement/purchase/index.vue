@@ -82,7 +82,6 @@ export default {
       })
     },
     getProductDetail({ index, row }, done){
-      console.log(row,999)
       this.purchase_id = row.purchase_code;
       this.$router.push({
         path: '/purchasingManagement/contractDetail',

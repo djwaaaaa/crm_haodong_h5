@@ -321,10 +321,7 @@
         let _this = this;
         this.contractEdit('purchase_code');
       },
-      close() {
-        this.productDialog = false;
-        this.$emit("closeProductDetail");
-      },
+       
       //销售合同
       getProjectList(kw) {
         let _this = this;

@@ -33,6 +33,7 @@ import { crudOptions } from './crud'
 import { d2CrudPlus } from 'd2-crud-plus'
 // import productDetail from '../productDetail'
 import comparisonCheck from '../../comparisonCheck'
+import { request } from '@/api/service'
 export default {
   name: 'salesManagement-sales',
   mixins: [d2CrudPlus.crud],
@@ -55,11 +56,9 @@ export default {
       return api.GetList(query)
     },
     addRequest (row) {
-      console.log('api', api)
       return api.AddObj(row)
     },
     updateRequest (row) {
-      console.log('----', row)
       return api.UpdateObj(row)
     },
     delRequest (row) {
@@ -67,7 +66,6 @@ export default {
     },
     getProductDetail({index, row }, done){
       this.offer_guid = row.contract_code;
-      console.log(row,222,this.offer_guid)
       // this.dialogShow = true;
       // this.$nextTick(()=>{
       //   this.$refs.dialog1.productDialog = true;
@@ -76,22 +74,26 @@ export default {
         path: '/salesManagement/contractDetail',
         query: {
           offerGuid: row.contract_code,
-          info:JSON.stringify(row)
+          id:row.id
         }
       });
     },
     addSalesContract(){
-      this.$router.push({
-        path: '/salesManagement/contractDetail',
-        query: {
-          add: 1,
-        }
-      });
+      return request({
+        url: 'contract.sale/add',
+        method: 'post',
+      }).then(ret => {
+        this.$router.push({
+          path: '/salesManagement/contractDetail',
+          query: {
+            id:ret.data.id
+          }
+        });
+      })
     },
     getComparisonCheck({ index, row }, done){
       this.checkShow=true;
       this.project_code = row.project_code;
-      console.log(row,1000)
       this.$nextTick(()=>{
         this.$refs.check.checkDialog = true;
       })
