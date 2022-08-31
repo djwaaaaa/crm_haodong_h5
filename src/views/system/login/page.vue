@@ -50,7 +50,7 @@
                     <i slot="prepend" class="fa fa-keyboard-o"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item prop="code">
+                <!-- <el-form-item prop="code">
                   <el-input
                     type="text"
                     v-model="formLogin.code"
@@ -59,7 +59,7 @@
                       <img class="login-code" src="./image/login-code.png">
                     </template>
                   </el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item prop="keep_login">
                   <el-checkbox v-model="formLogin.keep_login" true-label="1" false-label="0">保持登录</el-checkbox>
                 </el-form-item>
@@ -179,13 +179,13 @@ export default {
             trigger: 'blur'
           }
         ],
-        code: [
-          {
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur'
-          }
-        ]
+        // code: [
+        //   {
+        //     required: true,
+        //     message: '请输入验证码',
+        //     trigger: 'blur'
+        //   }
+        // ]
       }
     }
   },

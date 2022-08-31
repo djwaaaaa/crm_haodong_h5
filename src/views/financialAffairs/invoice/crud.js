@@ -2,7 +2,22 @@ import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
-      fixed: 'right' // 右边固定列
+      fixed: 'right',
+      width: 400,
+      custom: [
+        {
+          text: '通过',
+          type: 'success',
+          size: 'small',
+          emit: 'passApplyFor',
+        },
+        {
+          text: '驳回',
+          type: 'danger',
+          size: 'small',
+          emit: 'rejectApplyFor',
+        },
+      ],
     },
     pageOptions: {
       compact: false

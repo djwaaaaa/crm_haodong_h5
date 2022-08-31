@@ -68,22 +68,17 @@ export default {
        // this.crud.rowHandle.edit.disabled = true;
     },
     handleFormDataChange ({ key, value }) {
-          console.log(key,7456)
-          console.log(value,8963)
         },
     getCrudOptions () {
-      console.log("执行")
       return crudOptions(this)
     },
     pageRequest (query) {
       return api.GetList(query)
     },
     addRequest (row) {
-      console.log('api', api)
       return api.AddObj(row)
     },
     updateRequest (row) {
-      console.log('----', row)
       return api.UpdateObj(row)
     },
     delRequest (row) {
@@ -122,21 +117,16 @@ export default {
     },
     chooseList(){
       this.itemName = "就是你";
-      console.log(123456)
-
       // this.listDialogShow = true;
       // this.$nextTick(()=>{
       //   this.$refs.listDialogRef.listDialog = true;
       // })
     },
     changeItemName(name){
-      console.log(this.crud,3)
-      // console.log(this.$refs.d2Crud,1000,crudOptions(this).columns[3].form.component.value)
       // crudOptions(this).columns[3].form.component.value = "666777";
       // return name;
       this.itemName = "就是你";
       this.crud.addTemplate.project_name.value="777777";
-      console.log(this.itemName,777)
       // this.pageRequest({project_name:name});
     },
     getProjectList(kw){
@@ -163,16 +153,9 @@ export default {
   },
   watch:{
     itemName(){
-      console.log("变化",this.itemName,999888)
       this.getCrudOptions();
       // crudOptions(this.itemName)
     },
-    laaa(){
-      console.log("变化了")
-    }
-    // $refs.item(){
-    //   console.log("变化了")
-    // }
   }
 }
 </script>
