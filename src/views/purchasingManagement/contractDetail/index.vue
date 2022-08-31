@@ -12,7 +12,7 @@
         <tr>
           <td colspan="2" class="g tr">所属销售合同：</td>
           <td colspan="10">
-            <el-select v-model="row.contract_code" placeholder="请选择销售合同编号" popper-class="project" class="project">
+            <el-select v-model="row.contract_code" placeholder="请选择销售合同编号" popper-class="project" class="project" :disabled="!enterStatus">
               <el-option v-for="(item,index) in projectList" :key="index" :label="item.contract_code"
                 :value="item.contract_code" @click.native="selectProject(item.contract_code,item.project_name)">
               </el-option>
@@ -308,7 +308,7 @@
           if(code && name){
             this.enterStatus = false;
           }
-          if(code == 'purchase_code'){
+          if(this.row.purchase_code){
             this.contractCodeDisabled = true;
           }
           this.$message({
