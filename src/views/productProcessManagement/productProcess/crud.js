@@ -28,6 +28,7 @@ export const crudOptions = (vm) => {
         title: 'ID',
         key: 'id',
         type: 'text',
+        disabled: true,
         form:{
           disabled:true,
           show:false
@@ -37,6 +38,7 @@ export const crudOptions = (vm) => {
         title: 'pid',
         key: 'pid',
         type: 'text',
+        disabled: true,
         form:{
           disabled:true,
           show:false

@@ -113,27 +113,27 @@ export const crudOptions = (vm) => {
       {
         title: '简单描述',
         key: 'explain',
-        type: 'text',
+        type: 'text-area',
         width: 400,
       },
       {
         title: '复杂描述',
         key: 'describe',
-        type: 'text',
+        type: 'text-area',
         width: 400,
       },
-      {
-        title: '项目日期',
-        key: 'project_date',
-        type: 'datetime',
-        form:{
-          component:{
-            props:{
-              valueFormat:"yyyy-MM-dd HH-mm-ss"
-            }
-          }
-        }
-      },
+      // {
+      //   title: '项目日期',
+      //   key: 'project_date',
+      //   type: 'datetime',
+      //   form:{
+      //     component:{
+      //       props:{
+      //         valueFormat:"yyyy-MM-dd HH-mm-ss"
+      //       }
+      //     }
+      //   }
+      // },
     ]
   }
 }
