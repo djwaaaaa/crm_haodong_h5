@@ -92,6 +92,7 @@ export default {
           message: ret.msg,
           type: 'success'
         });
+        this.doRefresh();
       })
     },
     close(){
@@ -115,6 +116,7 @@ export default {
           message: ret.msg,
           type: 'success'
         });
+        this.doRefresh();
       })
     }
   }
