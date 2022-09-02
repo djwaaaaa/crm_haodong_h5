@@ -10,7 +10,7 @@
 
       <div slot="header">
         <crud-search ref="search" :options="crud.searchOptions" @submit="handleSearch"  />
-        <el-button slot="header"  v-permission="'permission:resource:add'" size="small" type="primary" @click="addRootRow"><i class="el-icon-plus"/> 新增</el-button>
+        <el-button slot="header"  size="small" type="primary" @click="addRootRow"><i class="el-icon-plus"/> 新增</el-button>
 
         <crud-toolbar :search.sync="crud.searchOptions.show"
                       :compact.sync="crud.pageOptions.compact"
@@ -65,7 +65,7 @@ export default {
       return ret
     },
     clearResourceTreeDictCache () {
-      d2CrudPlus.util.dict.clear('/permission/manager/resource/tree')
+      // d2CrudPlus.util.dict.clear('/permission/manager/resource/tree')
     },
     addRequest (row) {
       this.clearResourceTreeDictCache()

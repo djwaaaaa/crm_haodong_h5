@@ -2,14 +2,14 @@ import { request } from '@/api/service'
 const apiPrefix = '/permission/manager/resource'
 export function GetList (query) {
   return request({
-    url: apiPrefix + '/page',
+    url: 'system.menu/index',
     method: 'get',
     params: query
   })
 }
 export function GetTree (query) {
   return request({
-    url: apiPrefix + '/tree',
+    url: 'system.menu/index',
     method: 'get',
     params: query
   })
@@ -17,7 +17,7 @@ export function GetTree (query) {
 
 export function AddObj (obj) {
   return request({
-    url: apiPrefix + '/add',
+    url: 'system.menu/add',
     method: 'post',
     data: obj
   })
@@ -25,14 +25,14 @@ export function AddObj (obj) {
 
 export function UpdateObj (obj) {
   return request({
-    url: apiPrefix + '/update',
+    url: 'system.menu/update',
     method: 'post',
     data: obj
   })
 }
 export function DelObj (id) {
   return request({
-    url: apiPrefix + '/delete',
+    url: 'system.menu/delete',
     method: 'post',
     params: { id }
   })
