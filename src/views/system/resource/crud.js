@@ -80,13 +80,13 @@ export const crudOptions = (vm) => {
         // },
         width: 170
       },
-      {
-        title: '类型',
-        key: 'icon',
-        sortable: false,
-        type: 'icon-selector',
-        width: 60
-      },
+      // {
+      //   title: '类型',
+      //   key: 'icon',
+      //   sortable: false,
+      //   type: 'icon-selector',
+      //   width: 60
+      // },
       // {
       //   title: '权限代码',
       //   key: 'permission',
@@ -190,35 +190,56 @@ export const crudOptions = (vm) => {
         // disabled: false, //是否隐藏列
         sortable: true
       },
-      // {
-      //   title: '父节点',
-      //   key: 'parentId',
-      //   sortable: true,
-      //   width: 100,
-      //   type: 'tree-selector',
-      //   dict: {
-      //     url: '/permission/manager/resource/tree',
-      //     isTree: true,
-      //     value: 'id',
-      //     label: 'title',
-      //     getData: (url, dict) => { // 配置此参数会覆盖全局的getRemoteDictFunc
-      //       return request({ url: url }).then(ret => {
-      //         return [{ id: 0, title: '根节点', children: ret.data }]
-      //       })
-      //     }
-      //   },
-      //   form: {
-      //     component: {
-      //       props: {
-      //         multiple: false,
-      //         elProps: {
-      //           defaultExpandAll: true
-      //         },
-      //         dict: { cache: false }
-      //       }
-      //     }
-      //   }
-      // }
+      {
+        title: '上级菜单',
+        key: 'pid',
+        sortable: true,
+        width: 100,
+        type: 'tree-selector',
+        dict: {
+          url: 'system.menu/index',
+          isTree: true,
+          value: 'id',
+          label: 'title',
+          getData: (url, dict) => { // 配置此参数会覆盖全局的getRemoteDictFunc
+            return request({ url: url }).then(ret => {
+              let item = [];
+              let list = [];
+              for (let i = 0; i < ret.data.length; i++) {
+                delete ret.data[i].create_time;
+                delete ret.data[i].update_time;
+                delete ret.data[i].delete_time;
+                if(ret.data[i].pid == 0){
+                  ret.data[i].children = [];
+                  item.push(ret.data[i]);
+                }else{
+                  list.push(ret.data[i]);
+                }
+              }
+              for (let j = 0; j < list.length; j++) {
+                for (let k = 0; k < item.length; k++) {
+                  if(list[j].pid == item[k].id){
+                    item[k].children.push(list[j]);
+                  }
+                }
+              }
+              ret.data = item;
+              return [{ id: 0, title: '根节点', children: ret.data }]
+            })
+          }
+        },
+        form: {
+          component: {
+            props: {
+              multiple: false,
+              elProps: {
+                defaultExpandAll: true
+              },
+              dict: { cache: false }
+            }
+          }
+        }
+      }
     ]
   }
 }
