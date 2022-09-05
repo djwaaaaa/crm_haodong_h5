@@ -52,6 +52,7 @@ export const crudOptions = (vm) => {
         title: '资源名称',
         key: 'title',
         form: {
+          rules: [{ required: true, message: '请输入资源名称' }],
           component: {
             props: {
               placeholder: '菜单名称'
@@ -65,7 +66,10 @@ export const crudOptions = (vm) => {
         key: 'icon',
         sortable: false,
         type: 'icon-selector',
-        width: 60
+        width: 60,
+        form:{
+          rules: [{ required: true, message: '请选择图标' }],
+        }
       },
       {
         title: '菜单链接',
@@ -229,6 +233,7 @@ export const crudOptions = (vm) => {
           }
         },
         form: {
+          rules: [{ required: true, message: '请选择上级菜单' }],
           component: {
             props: {
               multiple: false,
