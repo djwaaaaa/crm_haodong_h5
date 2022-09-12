@@ -10,11 +10,11 @@
           </th>
         </tr>
         <tr>
-          <td colspan="2" class="g tr">所属销售合同：</td>
+          <td colspan="2" class="g tr">所属项目：</td>
           <td colspan="10">
-            <el-select v-model="row.contract_code" placeholder="请选择销售合同编号" popper-class="project" class="project" :disabled="!enterStatus">
-              <el-option v-for="(item,index) in projectList" :key="index" :label="item.contract_code"
-                :value="item.contract_code" @click.native="selectProject(item.contract_code,item.project_name)">
+            <el-select v-model="row.project_code" placeholder="请选择项目编号" popper-class="project" class="project" :disabled="!enterStatus">
+              <el-option v-for="(item,index) in projectList" :key="index" :label="item.project_name"
+                :value="item.project_code" @click.native="selectProject(item.project_code,item.project_name)">
               </el-option>
             </el-select>
           </td>
@@ -169,6 +169,7 @@
         row: {
           "id": 0,
           "contract_code": "",
+          "project_code": "",
           "company": "",
           "company_name": "",
           "address": "",
@@ -326,7 +327,7 @@
       getProjectList(kw) {
         let _this = this;
         return request({
-          url: 'contract.sale/getSaleList',
+          url: 'project/getProjectList',
           method: 'post',
           data: {
             kw: kw
@@ -336,7 +337,7 @@
         })
       },
       selectProject(code, name) {
-        this.row.contract_code = code;
+        this.row.project_code = code;
         this.row.project_name = name;
         this.contractEdit(code, name);
       },
@@ -352,7 +353,7 @@
           if(this.row.purchase_code){
             this.getList();
           }
-          if(this.row.contract_code){
+          if(this.row.project_code){
             this.enterStatus = false;
           }
           if(this.row.purchase_code){

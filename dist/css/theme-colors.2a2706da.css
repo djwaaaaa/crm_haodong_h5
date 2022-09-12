@@ -24,12 +24,12 @@
 .contractDetail table td .project[data-v-80554ab8]:focus{outline:1px solid #66b1ff}
 .contractDetail table td textarea[data-v-80554ab8]:focus{outline:1px solid #66b1ff}
 .contractDetail table .addProduct[data-v-80554ab8]{background-color:#409eff}
-.contractDetail table td el-input[data-v-34188815]:focus{outline:1px solid #66b1ff}
-.contractDetail table td .project[data-v-34188815]:focus{outline:1px solid #66b1ff}
-.contractDetail table td textarea[data-v-34188815]:focus{outline:1px solid #66b1ff}
-.contractDetail table .addProduct[data-v-34188815]{background-color:#409eff}
 .page .btn-group .btn-group__btn.btn-group__btn--link[data-v-f1a174c4]{color:#409eff}
 .nodeInput[data-v-008f41af]:focus{outline:1px solid #66b1ff}
+.contractDetail table td el-input[data-v-1716db8a]:focus{outline:1px solid #66b1ff}
+.contractDetail table td .project[data-v-1716db8a]:focus{outline:1px solid #66b1ff}
+.contractDetail table td textarea[data-v-1716db8a]:focus{outline:1px solid #66b1ff}
+.contractDetail table .addProduct[data-v-1716db8a]{background-color:#409eff}
 .el-pagination button:hover:not(:disabled){color:#409eff}
 .el-pagination__sizes .el-input .el-input__inner:hover{border-color:#409eff}
 .el-pagination.is-background .el-pager li:not(.disabled):hover{color:#409eff}
