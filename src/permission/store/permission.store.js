@@ -37,6 +37,7 @@ function formatRouter (parent, list) {
   if (parent == null) {
     parent = { children: [] }
   }
+  console.log("children222:",parent,list) 
   list.forEach((item) => {
     let newRouter = parent
     if (item.type !== 2 && !isEmpty(item.component)) { // 如果是按钮 或者没有配置component，则不加入路由
@@ -61,13 +62,14 @@ function formatRouter (parent, list) {
         }
       }
       children.push(newRouter)
+      console.log("children:",children)
     }
     if (item.children != null && item.children.length > 0) {
       if (newRouter.children == null) {
         newRouter.children = []
       }
-      console.log("子路由",newRouter,item.children)
-      formatRouter(newRouter, item.children)
+      // console.log("子路由",newRouter,item.children)
+      newRouter.children = formatRouter(newRouter, item.children)
     }
   })
 

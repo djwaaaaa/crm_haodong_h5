@@ -1,7 +1,7 @@
 <template>
   <d2-container  :class="{'page-compact':crud.pageOptions.compact}">
     <el-row :gutter="20" style="height:100%">
-      <el-col :span="6" style="height:100%" class="leftTable">
+      <el-col :span="4" style="height:100%" class="leftTable">
         <div>
           <div class="addBox" @click="addNode">
             <div class="el-icon-plus"></div>
