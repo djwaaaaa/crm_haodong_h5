@@ -49,6 +49,7 @@ export const crudOptions = (vm) => {
         title: '项目名称',
         key: 'project_code',
         type: 'select',
+        width: 150,
         dict: {
           url: '/dicts/getProjectList', // 配置url，可以缓存字典数据
           getData (url, dict) { // 覆盖全局获取字典请求配置
@@ -73,6 +74,16 @@ export const crudOptions = (vm) => {
             }
           ],
           editDisabled: true
+        }
+      },
+      {
+        title: '项目编号',
+        key: 'project_code',
+        sortable: true,
+        type: 'text',
+        width: 120,
+        form: {
+          disabled: true
         }
       },
       {

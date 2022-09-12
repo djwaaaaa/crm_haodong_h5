@@ -57,10 +57,6 @@ export const crudOptions = (vm) => {
         type: 'text',
       },
       {
-        title: '沟通结果',
-        key: 'connect_result',
-      },
-      {
         title: '沟通日期',
         key: 'connect_date',
         type: 'datetime',
@@ -72,6 +68,11 @@ export const crudOptions = (vm) => {
             }
           }
         }
+      },
+      {
+        title: '沟通结果',
+        key: 'connect_result',
+        type: 'text-area'
       },
     ]
   }

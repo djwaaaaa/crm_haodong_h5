@@ -18,7 +18,7 @@ export const crudOptions = (vm) => {
           emit: 'comparison',
         },
       ],
-      edit:{
+      view:{
         show:false
       }
     },
@@ -42,6 +42,16 @@ export const crudOptions = (vm) => {
         type: 'text',
         form:{
           disabled:true
+        }
+      },
+      {
+        title: '项目编号',
+        key: 'project_code',
+        sortable: true,
+        type: 'text',
+        width: 120,
+        form: {
+          disabled: true
         }
       },
       {

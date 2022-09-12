@@ -100,11 +100,21 @@
           <td><el-input type="text" v-model="info.unit" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
           <td><el-input type="text" v-model="info.count" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
           <td><el-input type="text" v-model="info.no_tax_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.no_tax_total_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_rate" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_amount" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
-          <td><el-input type="text" v-model="info.tax_total_price" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
+          <td><el-input type="text" v-model="info.no_tax_total_price" @change="edmit(info)" :disabled="true"></el-input></td>
+          <td>
+            <el-select v-model="info.tax_rate" placeholder="请选择税率" @change="edmit(info)" :disabled="enterStatus">
+              <el-option
+                v-for="item in tax_rate_arr"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <!-- <el-input type="text" v-model="info.tax_rate" @change="edmit(info)" :disabled="enterStatus"></el-input> -->
+          </td>
+          <td><el-input type="text" v-model="info.tax_amount" @change="edmit(info)" :disabled="true"></el-input></td>
+          <td><el-input type="text" v-model="info.tax_price" @change="edmit(info)" :disabled="true"></el-input></td>
+          <td><el-input type="text" v-model="info.tax_total_price" @change="edmit(info)" :disabled="true"></el-input></td>
           <td><el-input type="text" v-model="info.remark" @change="edmit(info)" :disabled="enterStatus"></el-input></td>
           <td>
             <div class="addProduct delete" @click="deleteProduct(info)">删除</div>
@@ -257,6 +267,7 @@
         total: null,
         enterStatus: true,
         contractCodeDisabled:false,
+        tax_rate_arr: [{value: 0.09, label: '9%'}, {value: 0.13, label: '13%'}],
       }
     },
     created() {
@@ -277,6 +288,7 @@
           for (const key in res) {
             _this.amount = _this.amount + (res[key].tax_total_price - 0);
             _this.total = _this.total + (res[key].count - 0);
+            res[key].tax_rate = parseFloat(res[key].tax_rate);
             delete res[key].matter_code;
             delete res[key].specs_x;
             delete res[key].specs_y;
@@ -336,6 +348,14 @@
         })
       },
       edmit(info) {
+        // 不含税总价=数量*不含税单价
+        info.no_tax_total_price = parseFloat(info.count * info.no_tax_price).toFixed(2);
+        // 税额=不含税单价*税率
+        info.tax_amount = parseFloat(info.no_tax_price * info.tax_rate).toFixed(2);
+        // 含税单价=不含税单价*（1+税率）
+        info.tax_price = parseFloat(info.no_tax_price) + parseFloat(info.tax_amount);
+        // 含税总价=数量*含税单价
+        info.tax_total_price = parseFloat(info.count * info.tax_price).toFixed(2);
         let _this = this;
         return request({
           url: 'contract.sale_product/edit',
