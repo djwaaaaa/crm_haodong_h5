@@ -133,4 +133,8 @@ export default {
  right: 0;
  margin:auto;
 }
+.el-tooltip__popper{
+  max-width:600px;
+  line-height: 2;
+}
 </style>

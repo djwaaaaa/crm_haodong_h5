@@ -67,8 +67,9 @@ export const crudOptions = (vm) => {
       {
         title: '备注',
         key: 'remark',
-        width: 500,
+        width: 300,
         type: 'text-area',
+        showOverflowTooltip:true,
         viewForm: {
           component: {
             name: null,

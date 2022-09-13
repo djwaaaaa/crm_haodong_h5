@@ -284,8 +284,9 @@ export const crudOptions = (vm) => {
       {
         title: '合同说明',
         key: 'contract_description',
-        width: 500,
+        width: 300,
         type: 'text-area',
+        showOverflowTooltip:true,
         viewForm: {
           component: {
             name: null,

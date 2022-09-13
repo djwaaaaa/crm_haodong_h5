@@ -51,16 +51,12 @@ export const crudOptions = (vm) => {
       //   },
       //   width: 150,
       // },
-      {
-        title: '沟通内容',
-        key: 'connect_content',
-        type: 'text',
-      },
+
       {
         title: '沟通日期',
         key: 'connect_date',
         type: 'datetime',
-        width: 80,
+        width: 140,
         form:{
           component:{
             props:{
@@ -68,6 +64,11 @@ export const crudOptions = (vm) => {
             }
           }
         }
+      },
+      {
+        title: '沟通内容',
+        key: 'connect_content',
+        type: 'text-area',
       },
       {
         title: '沟通结果',

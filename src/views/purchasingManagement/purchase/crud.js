@@ -61,8 +61,8 @@ export const crudOptions = (vm) => {
         search: { show: true },
         type: 'select',
         dict: {
-          url: '/dicts/getProjectList', 
-          getData (url, dict) { 
+          url: '/dicts/getProjectList',
+          getData (url, dict) {
             return request({
               url: "project/getProjectList",
               method: 'post'
@@ -242,17 +242,21 @@ export const crudOptions = (vm) => {
       {
         title: '合同说明',
         key: 'explain',
-        width: 500,
+        width: 300,
         type: 'text-area',
-        viewForm: {
-          component: {
-            name: null,
-            render (h, scope) {
-              // console.log(scope.9666)
-              return <div>{scope.value}</div>
-            }
-          }
-        }
+        showOverflowTooltip:true,
+        // viewForm: {
+        //   component: {
+        //     // name: null,
+        //     render (h, scope) {
+        //       // console.log(h,scope,9666000)
+        //       // return <div class="explain">1000{scope}</div>
+        //     },
+        //     // props:{
+        //     //   showOverflowTooltip:true
+        //     // }
+        //   }
+        // },
       },
     ]
   }
