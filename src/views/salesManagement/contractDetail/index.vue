@@ -133,7 +133,6 @@
           <td colspan="19"> <el-input type="textarea" cols="30" rows="10" @change="changeEdmit"
               :disabled="enterStatus" v-model="row.contract_description"></el-input></td>
         </tr>
-        </tr>
         <tr>
           <td colspan="10" class="tc">供方信息:</td>
           <td colspan="9" class="tc">需方信息:</td>

@@ -5,7 +5,7 @@
         <tr>
           <th colspan="19" class="h">
             <div class="header">
-              <h1>{{row.customer_company}}销售合同</h1>
+              <h1>{{row.customer_company}}采购合同</h1>
             </div>
           </th>
         </tr>
@@ -85,7 +85,6 @@
         <tr>
           <td colspan="19"> <el-input type="textarea" cols="30" rows="10" @change="changeEdmit"
               :disabled="enterStatus" v-model="row.explain"></el-input></td>
-        </tr>
         </tr>
         <tr>
           <td colspan="10" class="tl">供方(盖章):</td>
@@ -225,8 +224,8 @@
           _this.amount = 0;
           _this.total = 0;
           for (const key in res) {
+            res[key].total_price = Math.round(((res[key].price - 0) * (res[key].count - 0)) * 100) / 100;
             _this.amount = _this.amount + (res[key].total_price - 0);
-            _this.total = _this.total + (res[key].count - 0);
             delete res[key].matter_code;
             delete res[key].specs_x;
             delete res[key].specs_y;
@@ -240,10 +239,6 @@
             delete res[key].create_time;
             delete res[key].update_time;
             delete res[key].delete_time
-          }
-          if (_this.row.total_price != _this.amount){
-            _this.row.total_price = _this.amount;
-            _this.changeEdmit();
           }
           _this.contractArr = res;
         })
