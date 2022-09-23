@@ -14,9 +14,9 @@ function supplementPath (menu) {
   return menu.map(e => ({
     ...e,
     path: e.path || uniqueId('d2-menu-empty-'),
-    // ...e.children ? {
-    //   children: supplementPath(e.children)
-    // } : {}
+    ...e.children ? {
+      children: supplementPath(e.children)
+    } : {}
   }))
 }
 
@@ -37,7 +37,7 @@ function formatRouter (parent, list) {
   if (parent == null) {
     parent = { children: [] }
   }
-  console.log("children222:",parent,list) 
+  // console.log("children222:",parent,list)
   list.forEach((item) => {
     let newRouter = parent
     if (item.type !== 2 && !isEmpty(item.component)) { // 如果是按钮 或者没有配置component，则不加入路由
@@ -45,8 +45,8 @@ function formatRouter (parent, list) {
       if (item.component === 'layoutHeaderAside') {
         component = layoutHeaderAside
       } else {
-        // component = () => import('@/business/modules' + item.component)
-        component = () => import(item.component)
+        component = () => import('@/views/' + item.component)
+        // component = () => import("@/permission" + item.component)
       }
       const children = parent.children
       newRouter = {
@@ -62,14 +62,15 @@ function formatRouter (parent, list) {
         }
       }
       children.push(newRouter)
-      console.log("children:",children)
+      // console.log("children:",children)
     }
     if (item.children != null && item.children.length > 0) {
       if (newRouter.children == null) {
         newRouter.children = []
       }
+      formatRouter(newRouter, item.children)
       // console.log("子路由",newRouter,item.children)
-      newRouter.children = formatRouter(newRouter, item.children)
+      // newRouter.children = formatRouter(newRouter, item.children)
     }
   })
 
@@ -101,8 +102,8 @@ function formatMenu (menuTree) {
     menus.push({ path: item.path, title: item.title, icon: icon, children: children })
   })
   if (menus.length === 0) {
-    // menus = undefined
-    menus = []
+    menus = undefined
+    // menus = []
   }
   return menus
 }
@@ -164,8 +165,8 @@ const actions = {
       commit('d2admin/page/init', frameInRoutes.concat(accessedRoutes), { root: true })
 
       // 处理菜单
-      // const menus = supplementPath(formatMenu(menuTree)) // 根据后台获取的资源树，构建菜单
-      const menus = formatMenu(menuTree)
+      const menus = supplementPath(formatMenu(menuTree)) // 根据后台获取的资源树，构建菜单
+      // const menus = formatMenu(menuTree)
       console.log("菜单：",menus);
       menuHeader.splice(0, menuHeader.length)
       menuHeader.push(...StaticMenuHeader) // 重新构建菜单列表

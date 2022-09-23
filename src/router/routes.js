@@ -89,16 +89,16 @@ const frameIn = [
   //     },
   //   ]
   // },
-  {
-    path: '/productProcessManagement',
-    name: 'productProcessManagement',
-    meta,
-    redirect: { name: 'productProcess' },
-    component: layoutHeaderAside,
-    children: [
-      { path: 'productProcess', name: 'productProcess', component: _import('productProcessManagement/productProcess'), meta: { ...meta, title: '产品工序' } },
-    ]
-  },
+  // {
+  //   path: '/productProcessManagement',
+  //   name: 'productProcessManagement',
+  //   meta,
+  //   redirect: { name: 'productProcess' },
+  //   component: layoutHeaderAside,
+  //   children: [
+  //     { path: 'productProcess', name: 'productProcess', component: _import('productProcessManagement/productProcess'), meta: { ...meta, title: '产品工序' } },
+  //   ]
+  // },
   // {
   //   path: '/pm',
   //   name: 'pm',
@@ -137,7 +137,7 @@ const frameIn = [
   //   component: layoutHeaderAside,
   //   children: [
   //     { path: 'purchase', name: 'purchasingManagement-purchase', component: _import('purchasingManagement/purchase'), meta: { ...meta, title: '采购管理' } },
-  //     { path: 'contractDetail', name: 'purchasingManagement-contractDetail', component: _import('purchasingManagement/contractDetail'), meta: { ...meta,title: '采购合同' } },
+      { path: '/purchasingManagement/contractDetail', name: 'purchasingManagement-contractDetail', component: _import('purchasingManagement/contractDetail'), meta: { ...meta,title: '采购合同' } },
   //   ]
   // },
   // {

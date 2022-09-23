@@ -7,6 +7,7 @@ export function getPermissions () {
   }).then(ret => {
     // 如果使用你自己的后端，需要在此处将返回结果改造为本模块需要的结构
     // 结构详情，请参考示例中打印的日志 ”获取权限数据成功：{...}“ （实际上就是“资源管理”页面中列出来的数据）
+    console.log(supplementPath(ret.menuInfo),9966)
     return supplementPath(ret.menuInfo)
   })
 }
@@ -22,11 +23,12 @@ function convertPath(href){
       break;
   }
 }
+
 function supplementPath (menu) {
   return menu.map(e => ({
     ...e,
     // path: "system/role",
-    path: convertPath(e.href) || uniqueId('/d2-menu-empty-'),
+    path: e.href || uniqueId('/d2-menu-empty-'),
     ...e.child ? {
       children: supplementPath(e.child)
     } : {
@@ -34,6 +36,11 @@ function supplementPath (menu) {
     },
     type:1,
     permission:null,
-    component: e.pid ? "" : "layoutHeaderAside",
+    component: e.pid ? convertComponent(e.href) : "layoutHeaderAside",
   }))
+  console.log(menu,77777)
+}
+
+function convertComponent(component){
+  return component.replace(".html","").replace("/admin/",'')
 }

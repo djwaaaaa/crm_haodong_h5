@@ -3,7 +3,7 @@ import Adapter from 'axios-mock-adapter'
 import { get } from 'lodash'
 import util from '@/libs/util'
 import { errorLog, errorCreate } from './tools'
-
+import router from '@/router'
 /**
  * @description 创建请求实例
  */
@@ -37,7 +37,14 @@ function createService () {
             // [ 示例 ] code === 0 代表没有错误
             // TODO 可能结果还需要code和msg进行后续处理，所以去掉.data返回全部结果
             // return dataAxios.data
-            return dataAxios
+            console.log(dataAxios,9999)
+            if(dataAxios.url && dataAxios.url == "/admin/login/index.html"){
+              // this.
+              errorCreate(`${dataAxios.msg}`)
+              // router.push({ path: '/login' })
+            }else{
+              return dataAxios
+            }
           case 1:
             // [ 示例 ] code === 0 代表没有错误
             // TODO 可能结果还需要code和msg进行后续处理，所以去掉.data返回全部结果

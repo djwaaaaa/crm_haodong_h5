@@ -31,7 +31,7 @@ function registerRouterHook () {
     try {
       console.log('PM is enabled')
       const menuTreeRes = await getPermissions()
-      console.log('获取权限数据成功：', menuTreeRes)
+      // console.log('获取权限数据成功：', menuTreeRes)
       const menuTree = menuTreeRes;
 
       const menuTree1 = [
@@ -71,7 +71,7 @@ function registerRouterHook () {
                               "title": "资源管理",
                               "permission": "permission:resource:view",
                               "path": "/permission/resource",
-                              "component": "/permission/views/resource",
+                              "component": "/views/resource",
                               "icon": "address-book",
                               "sort": 90,
                               "type": 1,
@@ -100,7 +100,7 @@ function registerRouterHook () {
                                       "id": 12,
                                       "name": "addResource",
                                       "title": "添加资源",
-                                      "permission": "permission:resource:add",
+                                      "permission": "permission:resource:add1",
                                       "path": null,
                                       "component": null,
                                       "icon": null,
@@ -152,7 +152,7 @@ function registerRouterHook () {
                               "title": "角色管理",
                               "permission": "permission:role:view",
                               "path": "/permission/role",
-                              "component": "/permission/views/role",
+                              "component": "/views/role",
                               "icon": null,
                               "sort": 100,
                               "type": 1,

@@ -27,14 +27,14 @@ export const menuHeader = supplementPath([
   //     { path: '/system/resource', title: '资源管理' },
   //   ]
   // },
-  {
-    path: '/productProcessManagement',
-    title: '产品工序',
-    icon: 'folder-o',
-    children: [
-      { path: '/productProcessManagement/productProcess', title: '产品工序' },
-    ]
-  },
+  // {
+  //   path: '/productProcessManagement',
+  //   title: '产品工序',
+  //   icon: 'folder-o',
+  //   children: [
+  //     { path: '/productProcessManagement/productProcess', title: '产品工序' },
+  //   ]
+  // },
   // {
   //   path: '/pm',
   //   title: '项目管理',
@@ -99,14 +99,14 @@ export const menuAside = supplementPath([
   //     { path: '/system/resource', title: '资源管理' },
   //   ]
   // },
-  {
-    path: '/productProcessManagement',
-    title: '产品工序',
-    icon: 'folder-o',
-    children: [
-      { path: '/productProcessManagement/productProcess', title: '产品工序' },
-    ]
-  },
+  // {
+  //   path: '/productProcessManagement',
+  //   title: '产品工序',
+  //   icon: 'folder-o',
+  //   children: [
+  //     { path: '/productProcessManagement/productProcess', title: '产品工序' },
+  //   ]
+  // },
   // {
   //   path: '/pm',
   //   title: '项目管理',
