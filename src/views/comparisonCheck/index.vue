@@ -15,7 +15,7 @@
     <div class="dialog-content">
       <div class="itemDetail" v-if="choose">
         <!-- 销售合同 -->
-        <div class="item" v-for="(contracts,index) in contractArr">
+        <div class="item" v-for="(contracts,index) in contractArr" :key="index">
           <div class="header">
             <div class="name" v-if="contractArr.length < 2">销售合同基本信息</div>
             <div class="name" v-if="index">销售合同(增补合同)基本信息</div>
@@ -23,7 +23,7 @@
           </div>
           <div class="details">
             <ul>
-            	<li v-for="(detail,x) in contracts" :key="x">
+            	<li v-for="(detail,x) in contracts" :key="x" :class="{'all':contract[x] == '合同说明'}">
                 <p class="first">{{contract[x]}}:</p>
                 <p>{{detail}}</p>
               </li>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <!-- 生产订单 -->
-        <div class="item" v-for="(orders,index) in orderArr">
+        <div class="item" v-for="(orders,index) in orderArr" :key="index">
           <div class="header">
             <div class="name" v-if="orderArr.length < 2">生产订单基本信息</div>
             <div class="name" v-if="orderArr.length >= 2">生产订单{{index+1}}基本信息</div>
@@ -39,7 +39,7 @@
           </div>
           <div class="details">
             <ul>
-            	<li v-for="(detail,x) in orders" :key="x">
+            	<li v-for="(detail,x) in orders" :key="x" >
                 <p class="first">{{order[x]}}:</p>
                 <p>{{detail}}</p>
               </li>
@@ -55,7 +55,7 @@
           </div>
           <div class="details">
             <ul>
-            	<li v-for="(detail,x) in purchases" :key="x">
+            	<li v-for="(detail,x) in purchases" :key="x" :class="{'all':purchase[x] == '合同说明'}">
                 <p class="first">{{purchase[x]}}:</p>
                 <p>{{detail}}</p>
               </li>
@@ -72,12 +72,52 @@
             <div class="name" v-if="index">销售合同(增补合同)产品信息</div>
           </div>
           <div class="details">
-            <ul>
-            	<li v-for="(detail,x) in contracts" :key="x">
-                <p class="first">{{contract[x]}}:</p>
-                <p>{{detail}}</p>
-              </li>
-            </ul>
+            <table border="1" width="100%">
+              <tbody>
+                <tr>
+                	<th>序号</th>
+                  <th>产品名称</th>
+                  <th>(客户)产品名称</th>
+                  <th>税码</th>
+                  <th>开票产品名称</th>
+                  <th>产品图片</th>
+                  <th>规格尺寸</th>
+                  <th>款式颜色</th>
+                  <th>技术参数</th>
+                  <th>单位</th>
+                  <th>数量</th>
+                  <th>不含税单价</th>
+                  <th>不含税总价</th>
+                  <th>税率</th>
+                  <th>税额</th>
+                  <th>含税单价</th>
+                  <th>含税总价</th>
+                  <th>备注</th>
+                </tr>
+                <tr v-for="(detail,x) in contracts" :key="x">
+                	<td>{{x}}</td>
+                  <td>{{detail.product_name}}</td>
+                  <td>{{detail.customer_product_name}}</td>
+                  <td>{{detail.tax_code}}</td>
+                  <td>{{detail.invoice_product_name}}</td>
+                  <td>{{detail.product_img}}</td>
+                  <td>{{detail.specs_value}}</td>
+                  <td>{{detail.color}}</td>
+                  <td>{{detail.technical_param}}</td>
+                  <td>{{detail.unit}}</td>
+                  <td>{{detail.count}}</td>
+                  <td>{{detail.no_tax_price}}</td>
+                  <td>{{detail.no_tax_total_price}}</td>
+                  <td>{{detail.tax_rate}}</td>
+                  <td>{{detail.tax_amount}}</td>
+                  <td>{{detail.tax_price}}</td>
+                  <td>{{detail.tax_total_price}}</td>
+                  <td>{{detail.remark}}</td>
+                </tr>
+                <tr><td colspan="18">合计（元）:￥{{purchaseTotal(contracts,2)}}</td></tr>
+                <tr><td colspan="18">合计人民币金额大写：{{dealBigMoney(purchaseTotal(contracts,2))}}</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <!-- 生产订单 -->
@@ -115,12 +155,6 @@
                 </tr>
               </tbody>
             </table>
-            <!-- <ul>
-            	<li v-for="(detail,x) in orders" :key="x">
-                <p class="first">{{order[x]}}:</p>
-                <p>{{detail}}</p>
-              </li>
-            </ul> -->
           </div>
         </div>
         <!-- 采购合同 -->
@@ -130,12 +164,30 @@
             <div class="name" v-if="purchaseDetailArr.length >= 2">采购合同{{index+1}}产品信息</div>
           </div>
           <div class="details">
-            <ul>
-            	<li v-for="(detail,x) in purchases" :key="x">
-                <p class="first">{{purchaseDetail[x]}}:</p>
-                <p>{{detail}}</p>
-              </li>
-            </ul>
+            <table border="1" width="100%">
+              <tbody>
+                <tr>
+                	<th>序号</th>
+                  <th>产品名称</th>
+                  <th>单位</th>
+                  <th>数量</th>
+                  <th>单价</th>
+                  <th>总价</th>
+                  <th>备注</th>
+                </tr>
+                <tr v-for="(detail,x) in purchases" :key="x">
+                	<td>{{x}}</td>
+                  <td>{{detail.product_name}}</td>
+                  <td>{{detail.unit}}</td>
+                  <td>{{detail.count}}</td>
+                  <td>{{detail.price}}</td>
+                  <td>{{detail.total_price}}</td>
+                  <td>{{detail.remark}}</td>
+                </tr>
+                <tr><td colspan="7">合计（元）:￥{{purchaseTotal(purchases,1)}}</td></tr>
+                <tr><td colspan="7">合计人民币金额大写：{{dealBigMoney(purchaseTotal(purchases,1))}}</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -356,7 +408,6 @@ export default {
         }else{
           _this.orderDetailArr = ret.data.product_list;
         }
-        console.log(ret,8888)
       })
     },
     getContractPurchase(){
@@ -377,9 +428,48 @@ export default {
           _this.purchaseDetailArr = [[]];
         }else{
          _this.purchaseDetailArr = ret.data.product_list;
+
         }
-        console.log(ret,333)
       })
+    },
+    purchaseTotal(list,type){
+      let total = 0;
+      for (let i = 0; i < list.length; i++) {
+        if(type == 1){
+          total+=(list[i].total_price -0)
+        }else{
+          total+=(list[i].tax_total_price -0)
+        }
+      }
+      return total
+    },
+    dealBigMoney(n){
+        var fraction = ['角', '分'];
+        var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+        var unit = [ ['元', '万', '亿'], ['', '拾', '佰', '仟']  ];
+        var head = n < 0? '负': '';
+        n = Math.abs(n);
+
+        var s = '';
+
+        for (var i = 0; i < fraction.length; i++)
+        {
+            s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+        }
+        s = s || '整';
+        n = Math.floor(n);
+
+        for (var i = 0; i < unit[0].length && n > 0; i++)
+        {
+            var p = '';
+            for (var j = 0; j < unit[1].length && n > 0; j++)
+            {
+                p = digit[n % 10] + unit[1][j] + p;
+                n = Math.floor(n / 10);
+            }
+            s = p.replace(/(零.)*零$/, '').replace(/^$/, '零')  + unit[0][i] + s;
+        }
+        return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
     }
   },
   mounted(){
@@ -390,7 +480,6 @@ export default {
   watch:{
     checkDialog(){
       if(this.checkDialog){
-        console.log(123456)
       }
     }
   }
@@ -478,6 +567,9 @@ export default {
         margin-bottom: 10px;
         list-style: none;
         display: flex;
+        &.all{
+          width: 100%;
+        }
         p{
           padding: 0;
           margin: 0;

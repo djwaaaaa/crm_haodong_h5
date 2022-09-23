@@ -1,6 +1,13 @@
 <template>
   <d2-container :class="{'page-compact':crud.pageOptions.compact}">
-    <template slot="header">资源管理</template>
+    <template slot="header">资源管理
+      <example-helper title="权限管理帮助" >
+        <div>
+          <h3>如何启用权限管理，请点击下面帮助链接</h3>
+          <link-button href="http://d2-crud-plus.docmirror.cn/d2-crud-plus/guide/permission.html">权限管理帮助文档</link-button>
+        </div>
+      </example-helper>
+    </template>
     <d2-crud-x
       ref="d2Crud"
       v-bind="_crudProps"
@@ -10,7 +17,7 @@
 
       <div slot="header">
         <crud-search ref="search" :options="crud.searchOptions" @submit="handleSearch"  />
-        <!-- <el-button slot="header"  size="small" type="primary" @click="addRootRow"><i class="el-icon-plus"/> 新增</el-button> -->
+        <el-button slot="header"  v-permission="'permission:resource:add'" size="small" type="primary" @click="addRootRow"><i class="el-icon-plus"/> 新增</el-button>
 
         <crud-toolbar :search.sync="crud.searchOptions.show"
                       :compact.sync="crud.pageOptions.compact"
@@ -40,9 +47,8 @@ export default {
       return crudOptions(this)
     },
     async pageRequest (query) {
-      const ret = await GetTree(query);
-      console.log(ret,77777)
-      const list = ret.data;
+      const ret = await GetTree(query)
+      const list = ret.data
       ret.data = {
         current: 1,
         size: 10000,
@@ -66,7 +72,7 @@ export default {
       return ret
     },
     clearResourceTreeDictCache () {
-      // d2CrudPlus.util.dict.clear('/permission/manager/resource/tree')
+      d2CrudPlus.util.dict.clear('/permission/manager/resource/tree')
     },
     addRequest (row) {
       this.clearResourceTreeDictCache()

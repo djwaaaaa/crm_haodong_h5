@@ -13,12 +13,12 @@
       </div>
     </d2-crud-x>
     <el-dialog title="分配权限" :visible.sync="dialogPermissionVisible" custom-class="permission">
-      <el-tree class="filter-tree" :data="treeData" :default-checked-keys="checkedKeys" :check-strictly="false"
+      <el-tree class="filter-tree permissionTree" :data="treeData" :default-checked-keys="checkedKeys" :check-strictly="false"
         node-key="id" highlight-current :props="{label: 'title', value: 'id'}" show-checkbox ref="menuTree"
         default-expand-all>
       </el-tree>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="updatePermession(roleId)">更 新
+        <el-button type="primary" @click="updatePermession(roleId,userTitle)">更 新
         </el-button>
       </div>
     </el-dialog>
@@ -78,27 +78,30 @@
         if (item.children && item.children.length !== 0) {
           this.getAllCheckedLeafNodeId(item.children, checkedIds, temp)
         } else {
-          if (checkedIds.indexOf(item.id) !== -1) {
+          if(item.checked){
             temp.push(item.id)
           }
+          // if (checkedIds.indexOf(item.id) !== -1) {
+          //   temp.push(item.id)
+          // }
         }
       }
       return temp
     },
-    authzHandle (event) {
-      console.log('authz', event)
+    authzHandle ({ index, row }, done) {
+      console.log('authz', row)
       return request({
-        url: 'system.auth/authorize?id=1',
+        url: 'system.auth/authorize?id='+row.id,
         method: 'get',
       }).then(ret => {
         console.log(ret,"角色",event)
         this.$set(this, 'treeData', ret.data);
         this.$set(this, 'checkedKeys', []);
-        this.roleId = event.row.id;
-        // return this.updateChecked(event.row.id)
-        }).then(() => {
-          this.dialogPermissionVisible = true
-        })
+        this.roleId = row.id;
+        this.userTitle = row.title;
+        this.dialogPermissionVisible = true
+        return this.updateChecked();
+        }) 
       // resourceApi.GetTree().then(ret => {
       //   this.$set(this, 'treeData', ret.data)
       //   this.$set(this, 'checkedKeys', [])
@@ -110,30 +113,50 @@
       // })
     },
     updateChecked (id) {
-      return api.GetPermission(id).then(ret => {
-        let checkedIds = ret.data
+      // return api.GetPermission(id).then(ret => {
+        // let checkedIds = ret.data
         // 找出所有的叶子节点
-        checkedIds = this.getAllCheckedLeafNodeId(this.treeData, checkedIds, [])
+       let checkedIds = this.getAllCheckedLeafNodeId(this.treeData, checkedIds, [])
         console.log('all leaf ', checkedIds)
         this.$set(this, 'checkedKeys', checkedIds)
-        // this.$nextTick(() => {
-        //   this.$refs.menuTree.setCheckedKeys(checkedIds)
-        // })
-      })
+        this.$nextTick(() => {
+          this.$refs.menuTree.setCheckedKeys(checkedIds)
+        })
+      // })
     },
-    updatePermession (roleId) {
-      this.menuIds = this.$refs.menuTree.getCheckedKeys().concat(this.$refs.menuTree.getHalfCheckedKeys())
-      api.DoAuthz(roleId, this.menuIds).then(() => {
-        this.dialogPermissionVisible = false
-        this.updateChecked(roleId)
+    func(a,b){
+    	return a-b;
+    },
+    updatePermession (roleId,title) {
+      this.menuIds = this.$refs.menuTree.getCheckedKeys().concat(this.$refs.menuTree.getHalfCheckedKeys());
+      // this.menuIds = this.menuIds.sort(this.func);
+      console.log("从属",this.menuIds);
+      return request({
+        url: 'system.auth/saveAuthorize',
+        method: 'post',
+        data:{
+          id:roleId,
+          title:title,
+          node:this.menuIds
+        }
+      }).then(ret => {
+         this.updateChecked();
+         this.dialogPermissionVisible = false;
       })
+      // api.DoAuthz(roleId, this.menuIds).then(() => {
+      //   this.updateChecked(roleId)
+      // })
     }
     }
   }
 </script>
 <style lang="scss">
-.permission{
-  height: 70%;
+  .permission{
+    height: 70%;
+    overflow-y: hidden;
+  }
+.permissionTree{
+  height: 500px;
   overflow-y: scroll;
 }
 </style>

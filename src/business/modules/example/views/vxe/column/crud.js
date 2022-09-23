@@ -1,5 +1,5 @@
 import request from '@/business/api/request.mock'
-import XEUtils from 'xe-utils'
+// import XEUtils from 'xe-utils'
 
 export const crudOptions = {
   rowHandle: {
@@ -55,7 +55,7 @@ export const crudOptions = {
           let sumCell = null
           switch (column.property) {
             case 'amount':
-              sumCell = XEUtils.sum(data, column.property)
+              // sumCell = XEUtils.sum(data, column.property)
               break
           }
           sums.push(sumCell)

@@ -115,6 +115,11 @@ export const crudOptions = (vm) => {
         key: 'explain',
         type: 'text-area',
         width: 400,
+        form:{
+          component:{
+            span:24
+          }
+        }
       },
       {
         title: '复杂描述',
