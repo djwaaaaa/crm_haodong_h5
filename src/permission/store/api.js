@@ -36,11 +36,17 @@ function supplementPath (menu) {
     },
     type:1,
     permission:null,
+    name:convertComponent(e.href),
     component: e.pid ? convertComponent(e.href) : "layoutHeaderAside",
   }))
   console.log(menu,77777)
 }
 
 function convertComponent(component){
-  return component.replace(".html","").replace("/admin/",'')
+  if(component){
+    return component.replace(".html","").replace("/admin/",'')
+  }else{
+    return null
+  }
+  
 }

@@ -10,17 +10,37 @@ export const crudOptions = (vm) => {
           type: 'success',
           size: 'small',
           emit: 'productDetail',
+          disabled: () => {
+            return !vm.hasPermissions('contract.sale/detail')
+          }
         },
         {
           text: '对比查看',
           type: 'success',
           size: 'small',
           emit: 'comparison',
+          disabled: () => {
+            return !vm.hasPermissions('contract.sale/comparison')
+          }
         },
       ],
       view:{
         show:false
-      }
+      },
+      edit: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('contract.sale/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('contract.sale/delete')
+        }
+      },
     },
     pageOptions: {
       compact: false

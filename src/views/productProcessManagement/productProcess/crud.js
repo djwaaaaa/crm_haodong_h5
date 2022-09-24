@@ -6,7 +6,21 @@ export const crudOptions = (vm) => {
       width: 180,
       view:{
         show:false
-      }
+      },
+      edit: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('technique/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('technique/delete')
+        }
+      },
     },
     searchOptions:{
       show: false

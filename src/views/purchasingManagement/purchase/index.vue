@@ -11,7 +11,7 @@
       <div slot="header">
         <crud-search ref="search" :options="crud.searchOptions" @submit="handleSearch"  />
         <el-button-group>
-          <el-button size="small" type="primary" @click="addSalesContract"><i class="el-icon-plus"/> 新增</el-button>
+          <el-button size="small" v-permission="'contract.purchase/add'" type="primary" @click="addSalesContract"><i class="el-icon-plus"/> 新增</el-button>
           <!-- <el-button size="small" type="primary" @click="addRow"><i class="el-icon-plus"/> 新增</el-button> -->
         </el-button-group>
         <crud-toolbar :search.sync="crud.searchOptions.show"

@@ -9,20 +9,40 @@ export const crudOptions = (vm) => {
           text: '产品明细',
           type: 'success',
           size: 'small',
-          emit: 'productDetail'
+          emit: 'productDetail',
+          disabled: () => {
+            return !vm.hasPermissions('project.offer_product/index')
+          }
         },
         {
           text: '沟通',
           type: 'primary',
           size: 'small',
-          emit: 'recordCommunication'
+          emit: 'recordCommunication',
+          disabled: () => {
+            return !vm.hasPermissions('project.offer_connect/index')
+          }
         }
       ],
       view:{
         show (index, row) {
           return false
         },
-      }
+      },
+      edit: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('project.offer/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('project.offer/delete')
+        }
+      },
     },
     pageOptions: {
       compact: false
@@ -76,7 +96,7 @@ export const crudOptions = (vm) => {
         title: '项目名称',
         key: 'project_name',
         width: 200,
-        search: { 
+        search: {
           show: true,
           component:{
             props: {

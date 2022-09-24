@@ -4,18 +4,38 @@ export const crudOptions = (vm) => {
     rowHandle: {
       fixed: 'right',
       width: 400,
+      edit: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('credit.invoice/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('credit.invoice/delete')
+        }
+      },
       custom: [
         {
           text: '通过',
           type: 'success',
           size: 'small',
           emit: 'passApplyFor',
+          disabled: () => {
+            return !vm.hasPermissions('credit.invoice/adopt')
+          }
         },
         {
           text: '驳回',
           type: 'danger',
           size: 'small',
           emit: 'rejectApplyFor',
+          disabled: () => {
+            return !vm.hasPermissions('credit.invoice/reject')
+          }
         },
       ],
     },

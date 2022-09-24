@@ -171,7 +171,7 @@ const actions = {
       menuHeader.splice(0, menuHeader.length)
       menuHeader.push(...StaticMenuHeader) // 重新构建菜单列表
       menuHeader.push(...menus) // 将动态菜单放进去
-
+      console.log("顶栏菜单",menuHeader)
       // 重新设置顶栏菜单
       commit('d2admin/menu/headerSet', menuHeader, { root: true })
       // 重新设置侧边栏菜单

@@ -2,7 +2,21 @@ import { request } from '@/api/service'
 export const crudOptions = (vm) => {
   return {
     rowHandle: {
-      fixed: 'right' // 右边固定列
+      fixed: 'right', // 右边固定列
+      edit: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('credit.payable/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('credit.payable/delete')
+        }
+      },
     },
     pageOptions: {
       compact: false

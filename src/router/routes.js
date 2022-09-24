@@ -129,28 +129,28 @@ const frameIn = [
   //     { path: 'productionOrder', name: 'productionOrderManagement-productionOrder', component: _import('productionOrderManagement/productionOrder'), meta: { ...meta, title: '生产订单',cache:false } },
   //   ],
   // },
-  // {
-  //   path: '/purchasingManagement',
-  //   name: 'purchasingManagement',
-  //   meta,
-  //   redirect: { name: 'purchasingManagement-purchase' },
-  //   component: layoutHeaderAside,
-  //   children: [
-  //     { path: 'purchase', name: 'purchasingManagement-purchase', component: _import('purchasingManagement/purchase'), meta: { ...meta, title: '采购管理' } },
+  {
+    path: '/purchasingManagement',
+    name: 'purchasingManagement',
+    meta,
+    redirect: { name: 'purchasingManagement-purchase' },
+    component: layoutHeaderAside,
+    children: [
+      // { path: 'purchase', name: 'purchasingManagement-purchase', component: _import('purchasingManagement/purchase'), meta: { ...meta, title: '采购管理' } },
       { path: '/purchasingManagement/contractDetail', name: 'purchasingManagement-contractDetail', component: _import('purchasingManagement/contractDetail'), meta: { ...meta,title: '采购合同' } },
-  //   ]
-  // },
-  // {
-  //   path: '/salesManagement',
-  //   name: 'salesManagement',
-  //   meta,
-  //   redirect: { name: 'salesManagement-sales' },
-  //   component: layoutHeaderAside,
-  //   children: [
-  //     { path: 'sales', name: 'salesManagement-sales', component: _import('salesManagement/sales'), meta: { ...meta, title: '销售管理',cache:false  } },
-  //     { path: 'contractDetail', name: 'salesManagement-contractDetail', component: _import('salesManagement/contractDetail'), meta: { ...meta,title: '销售合同' } },
-  //   ]
-  // },
+    ]
+  },
+  {
+    path: '/salesManagement',
+    name: 'salesManagement',
+    meta,
+    redirect: { name: 'salesManagement-sales' },
+    component: layoutHeaderAside,
+    children: [
+      // { path: 'sales', name: 'salesManagement-sales', component: _import('salesManagement/sales'), meta: { ...meta, title: '销售管理',cache:false  } },
+      { path: 'contractDetail', name: 'salesManagement-contractDetail', component: _import('salesManagement/contractDetail'), meta: { ...meta,title: '销售合同' } },
+    ]
+  },
   // {
   //   path: '/financialAffairs',
   //   name: 'financialAffairs',

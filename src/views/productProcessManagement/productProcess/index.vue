@@ -3,7 +3,7 @@
     <el-row :gutter="20" style="height:100%">
       <el-col :span="4" style="height:100%" class="leftTable">
         <div>
-          <div class="addBox" @click="addNode">
+          <div class="addBox" v-permission="'technique/addProduct'" @click="addNode">
             <div class="el-icon-plus"></div>
           </div>
           <el-tree
@@ -28,18 +28,21 @@
                     <el-button
                       type="text"
                       size="mini"
+                      v-permission="'technique/addProduct'"
                       @click.stop.prevent="() => append(data)">
                       <div class="node-icon el-icon-plus"></div>
                     </el-button>
                     <el-button
                       type="text"
                       size="mini"
+                      v-permission="'technique/editProduct'"
                       @click.stop.prevent="() => edit(node,data)">
                       <div class="node-icon el-icon-edit"></div>
                     </el-button>
                     <el-button
                       type="text"
                       size="mini"
+                      v-permission="'technique/deleteProduct'"
                       @click.stop.prevent="() => remove(node, data)">
                       <div class="node-icon el-icon-delete"></div>
                     </el-button>
@@ -59,7 +62,7 @@
             <div class="processName">{{processName}}</div>
             <crud-search ref="search" :options="crud.searchOptions" @submit="handleSearch"  />
             <el-button-group>
-              <el-button size="small" type="primary" @click="addRow"><i class="el-icon-plus"/> 新增</el-button>
+              <el-button size="small" v-permission="'technique/add'" type="primary" @click="addRow"><i class="el-icon-plus"/> 新增</el-button>
             </el-button-group>
             <crud-toolbar :search.sync="crud.searchOptions.show"
                           :compact.sync="crud.pageOptions.compact"

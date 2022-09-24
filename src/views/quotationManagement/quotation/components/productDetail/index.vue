@@ -18,7 +18,6 @@
         </ul>
     </div>
     <d2-container type="ghost"  :class="{'page-compact':crud.pageOptions.compact}">
-      <!-- <template slot="header">项目管理</template> -->
       <d2-crud-x
           ref="d2Crud"
           v-bind="_crudProps"
@@ -27,7 +26,7 @@
         <div slot="header">
           <crud-search ref="search" :options="crud.searchOptions" @submit="handleSearch"  />
           <el-button-group>
-            <el-button size="small" type="primary" @click="addRow"><i class="el-icon-plus"/> 新增</el-button>
+            <el-button size="small" v-permission="'project.offer_product/add'" type="primary" @click="addRow"><i class="el-icon-plus"/> 新增</el-button>
           </el-button-group>
           <crud-toolbar :search.sync="crud.searchOptions.show"
                         :compact.sync="crud.pageOptions.compact"

@@ -3,6 +3,22 @@ export const crudOptions = (vm) => {
     pageOptions: {
       compact: false
     },
+    rowHandle:{
+      edit: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('project/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        text: null,
+        disabled: () => {
+          return !vm.hasPermissions('project/delete')
+        }
+      },
+    },
     options: {
       height: '100%'
     },
