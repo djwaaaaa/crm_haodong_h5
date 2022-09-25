@@ -31,9 +31,7 @@ function registerRouterHook() {
 
     // 初始化动态路由
     try {
-      console.log('PM is enabled')
       const menuTreeRes = await getPermissions()
-      console.log('获取权限数据成功：', menuTreeRes)
       const menuTree = menuTreeRes;
       const menuTree1 = [{
         "id": 1,
@@ -94,19 +92,19 @@ function registerRouterHook() {
                     "children": []
                   },
                   {
-                    "id": 12,
-                    "name": "addResource",
+                    // "id": 12,
+                    // "name": "addResource",
                     "title": "添加资源",
-                    "permission": "permission:resource:add1",
-                    "path": null,
-                    "component": null,
-                    "icon": null,
-                    "sort": 100,
+                    "permission": "permission:resource:add",
+                    // "path": null,
+                    // "component": null,
+                    // "icon": null,
+                    // "sort": 100,
                     "type": 2,
-                    "parentId": 8,
-                    "delFlag": false,
-                    "createTime": "2020-02-15T10:53:48.000+0000",
-                    "updateTime": "2020-02-15T10:53:48.000+0000",
+                    // "parentId": 8,
+                    // "delFlag": false,
+                    // "createTime": "2020-02-15T10:53:48.000+0000",
+                    // "updateTime": "2020-02-15T10:53:48.000+0000",
                     "children": []
                   },
                   {
@@ -358,13 +356,11 @@ function registerRouterHook() {
       await store.dispatch('permission/generateRoutes', {
         menuTree
       })
-      console.log('PM load success')
       next({
         path: to.path,
         replace: true
       })
     } catch (e) {
-      console.error('加载动态路由失败', e)
       next()
     }
   })

@@ -4,14 +4,12 @@ export const crudOptions = (vm) => {
       fixed: 'right' ,// 右边固定列
       edit: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('project.offer_product/edit')
         }
       },
       remove: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('project.offer_product/delete')
         }

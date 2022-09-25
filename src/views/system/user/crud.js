@@ -3,6 +3,18 @@ export const crudOptions = (vm) => {
     rowHandle:{
       fixed: 'right',
       width: 360,
+      edit: {
+        thin: true,
+        disabled: () => {
+          return !vm.hasPermissions('system.admin/edit')
+        }
+      },
+      remove: {
+        thin: true,
+        disabled: () => {
+          return !vm.hasPermissions('system.admin/delete')
+        }
+      },
       custom: [
         {
           thin: true,
@@ -12,7 +24,7 @@ export const crudOptions = (vm) => {
           emit: 'setPassword',
           icon: 'el-icon-setting',
           disabled () {
-            // return !vm.hasPermissions('usersphere:user:authz')
+            return !vm.hasPermissions('system.admin/password')
           }
         },
         {
@@ -23,7 +35,7 @@ export const crudOptions = (vm) => {
           emit: 'authz',
           icon: 'el-icon-s-flag',
           disabled () {
-            // return !vm.hasPermissions('usersphere:user:authz')
+            return !vm.hasPermissions('system.admin/edit')
           }
         }
       ],

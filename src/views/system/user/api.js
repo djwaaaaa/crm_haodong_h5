@@ -23,7 +23,12 @@ export function GetList (query) {
     ret.data.current = query.current;
     ret.data.size = query.size;
     ret.data.total = ret.count;
-    ret.data.records = ret.data;
+    let res = ret.data;
+    for (const key in res) {
+       delete res[key].update_time;
+       delete res[key].delete_time;
+    }
+    ret.data.records = res;
     return ret
   })
 }
@@ -36,6 +41,15 @@ export function AddObj (obj) {
 }
 
 export function UpdateObj (obj) {
+  console.log(obj,999999)
+  for (const key in obj) {
+    console.log(obj,777777)
+     delete obj.create_time;
+     delete obj.login_num;
+     delete obj.sort;
+     delete obj.status;
+  }
+  console.log(obj,9999992222)
   return request({
     url: 'system.admin/edit',
     method: 'post',

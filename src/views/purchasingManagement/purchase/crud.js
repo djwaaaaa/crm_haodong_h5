@@ -29,14 +29,12 @@ export const crudOptions = (vm) => {
       },
       edit: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('contract.purchase/edit')
         }
       },
       remove: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('contract.purchase/delete')
         }

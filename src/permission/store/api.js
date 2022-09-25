@@ -7,15 +7,12 @@ export function getPermissions () {
   }).then(ret => {
     // 如果使用你自己的后端，需要在此处将返回结果改造为本模块需要的结构
     // 结构详情，请参考示例中打印的日志 ”获取权限数据成功：{...}“ （实际上就是“资源管理”页面中列出来的数据）
-    console.log(supplementPath(ret.menuInfo),9966)
     return supplementPath(ret.menuInfo)
   })
 }
 function convertPath(href){
-  console.log("href",href)
   switch (href){
     case "/admin/system.admin/index.html":
-      console.log("用户管理")
       return "/system/user"
       break;
     default:
@@ -32,14 +29,13 @@ function supplementPath (menu) {
     ...e.child ? {
       children: supplementPath(e.child)
     } : {
-      children:[]
+      children:e.children
     },
     type:1,
     permission:null,
     name:convertComponent(e.href),
     component: e.pid ? convertComponent(e.href) : "layoutHeaderAside",
   }))
-  console.log(menu,77777)
 }
 
 function convertComponent(component){
@@ -48,5 +44,5 @@ function convertComponent(component){
   }else{
     return null
   }
-  
+
 }

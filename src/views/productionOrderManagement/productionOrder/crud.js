@@ -26,21 +26,18 @@ export const crudOptions = (vm) => {
       ],
       view: {
         thin: true,
-        text: null,
         disabled () {
           return !vm.hasPermissions('order/index')
         }
       },
       edit: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('order/edit')
         }
       },
       remove: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('order/delete')
         }

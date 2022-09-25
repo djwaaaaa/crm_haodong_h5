@@ -9,23 +9,23 @@ export const crudOptions = (vm) => {
       view: {
         thin: true,
         text: null,
-        // disabled () {
-        //   return !vm.hasPermissions('permission:resource:view')
-        // }
+        disabled () {
+          return !vm.hasPermissions('system.menu/add')
+        }
       },
       edit: {
         thin: true,
         text: null,
-        // disabled: () => {
-        //   return !vm.hasPermissions('permission:resource:edit')
-        // }
+        disabled: () => {
+          return !vm.hasPermissions('system.menu/edit')
+        }
       },
       remove: {
         thin: true,
         text: null,
-        // disabled: () => {
-        //   return !vm.hasPermissions('permission:resource:del')
-        // }
+        disabled: () => {
+          return !vm.hasPermissions('system.menu/delete')
+        }
       },
       custom: [
         {
@@ -35,9 +35,9 @@ export const crudOptions = (vm) => {
           size: 'small',
           emit: 'add-sub-resource',
           icon: 'el-icon-plus',
-          // disabled: () => {
-          //   return !vm.hasPermissions('permission:resource:add')
-          // }
+          disabled: () => {
+            return !vm.hasPermissions('system.menu/add')
+          }
         }
       ],
       width: 180,

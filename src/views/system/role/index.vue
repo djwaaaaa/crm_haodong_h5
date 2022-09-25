@@ -5,7 +5,7 @@
       <div slot="header">
         <crud-search ref="search" :options="crud.searchOptions" @submit="handleSearch" />
         <el-button-group>
-          <el-button size="small" type="primary" @click="addRow"><i class="el-icon-plus" /> 新增</el-button>
+          <el-button size="small" v-permission="'system.auth/add'" type="primary" @click="addRow"><i class="el-icon-plus" /> 新增</el-button>
         </el-button-group>
         <crud-toolbar :search.sync="crud.searchOptions.show" :compact.sync="crud.pageOptions.compact"
           :columns="crud.columns" @refresh="doRefresh()" @columns-filter-changed="handleColumnsFilterChanged" />
@@ -62,11 +62,9 @@
         return api.GetList(query)
       },
       addRequest(row) {
-        console.log('api', api)
         return api.AddObj(row)
       },
       updateRequest(row) {
-        console.log('----', row)
         return api.UpdateObj(row)
       },
       delRequest(row) {
@@ -89,19 +87,17 @@
       return temp
     },
     authzHandle ({ index, row }, done) {
-      console.log('authz', row)
       return request({
         url: 'system.auth/authorize?id='+row.id,
         method: 'get',
       }).then(ret => {
-        console.log(ret,"角色",event)
         this.$set(this, 'treeData', ret.data);
         this.$set(this, 'checkedKeys', []);
         this.roleId = row.id;
         this.userTitle = row.title;
         this.dialogPermissionVisible = true
         return this.updateChecked();
-        }) 
+        })
       // resourceApi.GetTree().then(ret => {
       //   this.$set(this, 'treeData', ret.data)
       //   this.$set(this, 'checkedKeys', [])
@@ -117,7 +113,6 @@
         // let checkedIds = ret.data
         // 找出所有的叶子节点
        let checkedIds = this.getAllCheckedLeafNodeId(this.treeData, checkedIds, [])
-        console.log('all leaf ', checkedIds)
         this.$set(this, 'checkedKeys', checkedIds)
         this.$nextTick(() => {
           this.$refs.menuTree.setCheckedKeys(checkedIds)
@@ -130,22 +125,19 @@
     updatePermession (roleId,title) {
       this.menuIds = this.$refs.menuTree.getCheckedKeys().concat(this.$refs.menuTree.getHalfCheckedKeys());
       // this.menuIds = this.menuIds.sort(this.func);
-      console.log("从属",this.menuIds);
       return request({
         url: 'system.auth/saveAuthorize',
         method: 'post',
         data:{
           id:roleId,
           title:title,
-          node:this.menuIds
+          node:"["+this.menuIds+"]"
         }
       }).then(ret => {
          this.updateChecked();
          this.dialogPermissionVisible = false;
+      }).catch(msg => {
       })
-      // api.DoAuthz(roleId, this.menuIds).then(() => {
-      //   this.updateChecked(roleId)
-      // })
     }
     }
   }
@@ -154,9 +146,13 @@
   .permission{
     height: 70%;
     overflow-y: hidden;
+    padding-bottom: 20px;
+    .el-dialog__body{
+      height: 70%;
+    }
   }
 .permissionTree{
-  height: 500px;
+  height: 100%;
   overflow-y: scroll;
 }
 </style>

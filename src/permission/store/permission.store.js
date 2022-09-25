@@ -62,14 +62,12 @@ function formatRouter (parent, list) {
         }
       }
       children.push(newRouter)
-      // console.log("children:",children)
     }
     if (item.children != null && item.children.length > 0) {
       if (newRouter.children == null) {
         newRouter.children = []
       }
       formatRouter(newRouter, item.children)
-      // console.log("子路由",newRouter,item.children)
       // newRouter.children = formatRouter(newRouter, item.children)
     }
   })
@@ -155,11 +153,9 @@ const actions = {
   generateRoutes ({ rootState, state, commit }, { menuTree }) {
     return new Promise(resolve => {
       // 处理路由
-      console.log("处理路由:",menuTree);
       const accessedRoutes = formatRouter(null, menuTree) // 根据后台获取到的资源树构建路由列表
       const permissions = formatPermissions(menuTree, []) // 从资源树中抽取权限code列表
       commit('setRoutes', { accessedRoutes, permissions }) // 将菜单和权限存储到vuex里面
-      console.log("路由：",accessedRoutes);
       router.addRoutes(accessedRoutes) // 添加动态路由
       // 处理路由 得到每一级的路由设置
       commit('d2admin/page/init', frameInRoutes.concat(accessedRoutes), { root: true })
@@ -167,11 +163,9 @@ const actions = {
       // 处理菜单
       const menus = supplementPath(formatMenu(menuTree)) // 根据后台获取的资源树，构建菜单
       // const menus = formatMenu(menuTree)
-      console.log("菜单：",menus);
       menuHeader.splice(0, menuHeader.length)
       menuHeader.push(...StaticMenuHeader) // 重新构建菜单列表
       menuHeader.push(...menus) // 将动态菜单放进去
-      console.log("顶栏菜单",menuHeader)
       // 重新设置顶栏菜单
       commit('d2admin/menu/headerSet', menuHeader, { root: true })
       // 重新设置侧边栏菜单

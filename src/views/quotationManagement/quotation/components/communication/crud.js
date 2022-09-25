@@ -6,14 +6,12 @@ export const crudOptions = (vm) => {
     rowHandle:{
       edit: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('project.offer_connect/edit')
         }
       },
       remove: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('project.offer_connect/delete')
         }

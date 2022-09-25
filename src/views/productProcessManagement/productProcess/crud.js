@@ -9,14 +9,12 @@ export const crudOptions = (vm) => {
       },
       edit: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('technique/edit')
         }
       },
       remove: {
         thin: true,
-        text: null,
         disabled: () => {
           return !vm.hasPermissions('technique/delete')
         }
