@@ -10,18 +10,18 @@ export const crudOptions = (vm) => {
           type: 'success',
           size: 'small',
           emit: 'productDetail',
-          disabled: () => {
-            return !vm.hasPermissions('order/edit')
-          }
+          // disabled: () => {
+          //   return !vm.hasPermissions('order/edit')
+          // }
         },
         {
           text: '对比查看',
           type: 'success',
           size: 'small',
           emit: 'comparison',
-          disabled: () => {
-            return !vm.hasPermissions('order/comparison')
-          }
+          // disabled: () => {
+          //   return !vm.hasPermissions('order/comparison')
+          // }
         },
       ],
       view: {
