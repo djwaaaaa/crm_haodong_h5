@@ -86,7 +86,7 @@ export default {
         if (this.contentWidth * 2 - this.currentTranslateX <= this.scrollWidth) {
           this.currentTranslateX -= this.contentWidth
         } else {
-          this.currentTranslateX = this.contentWidth - this.scrollWidth
+          this.currentTranslateX = this.contentWidth - this.scrollWidth - 100
         }
       }
     },
@@ -102,6 +102,8 @@ export default {
           if (this.currentTranslateX > 0) {
             this.currentTranslateX = 0
           }
+        }else{
+          this.currentTranslateX = contentWidth - scrollWidth
         }
         // 更新元素数据
         this.contentWidth = contentWidth
